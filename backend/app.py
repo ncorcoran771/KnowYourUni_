@@ -22,18 +22,19 @@ def health():
 
 # Validate a given student id
 @app.post("/api/validate/${id}")
-def validate_id(id: str):
-    return # Query from Neo4j to validate
+def validate_id(id: str) -> bool:
+    v: bool = qu.validate_student_id(id)
+    return {"ok": v}
 
 # Return all nodes/data for a specific user
 @app.post("/api/kg/${id}")
-def get_id_data(id: str):
-    return # Query from Neo4j to return user
+def get_id_data(id: str) -> dict:
+    return qu.fetch_student_data(id)
 
 # Return all nodes/data in the KG
 @app.post("/api/kg/")
-def get_all_data():
-    return # Query from Neo4j to return all data
+def get_all_data() -> dict:
+    return qu.fetch_full_kg_data()
 
 ''' TODO (endpoints/connections)
 - LLM requests + responses
