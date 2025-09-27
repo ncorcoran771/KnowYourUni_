@@ -19,9 +19,18 @@ app.add_middleware(  # Letting Vite talk to the API
 def health():
     return {"status": "ok"}
 
+# Return all nodes/data for a specific user
+@app.post("/api/get_id_data")
+def get_id_data():
+    return # Query from Neo4j to return user
+
+@app.post("/api/get_all_data")
+def get_all_data():
+    return # Query from Neo4j to return all data
+
 ''' TODO (endpoints/connections)
 - Auth (Student ID or Admin to see everything)
 - LLM requests + responses
-- NLP suggestions
+- NLP/LLM text suggestions
 '''
 
