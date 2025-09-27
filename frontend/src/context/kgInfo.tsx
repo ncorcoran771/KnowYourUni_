@@ -1,6 +1,7 @@
 /* Provider for the knowledge graph data */
 
-import React, { createContext, useState, ReactNode, useContext } from 'react';
+import React, { createContext, useState, useContext } from 'react';
+import type { ReactNode } from 'react';
 
 export interface KGInfo {
     nodes: string[];

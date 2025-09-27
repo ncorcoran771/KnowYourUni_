@@ -2,6 +2,7 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import query_utils as qu  # Neo4j query utils
 # TODO Import all helper modules/functions here
 
 # Initializng the connection

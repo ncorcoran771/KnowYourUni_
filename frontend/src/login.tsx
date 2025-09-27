@@ -1,69 +1,137 @@
-/* Login Component */
+/* Login component logic */
+
+import React, { useState } from 'react';
+import { Layout, Button, Form, Input, Typography, Card, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { isAdmin } from './context/verify-admin';  // Check if user is admin
-import { fetchKGDataById, fetchFullKGData } from './api'
-import { useUserInfo } from './context/userInfo';  // Hook from userInfo context
+import { isAdmin } from './context/verify-admin';
+import { fetchKGDataById, fetchFullKGData } from './api';
+import { useUserInfo } from './context/userInfo';
 import { useKGInfo } from './context/kgInfo';
 
-/** Functional component for logging in. 
- * - Users can log in by entering their ID.
- * - Admins can log in with a predefined admin ID.  
-*/
-function App() {
-  // Getting states and contexts to set
+const { Header, Content, Footer } = Layout;
+const { Title, Text } = Typography;
+
+/* Functional component for the login page */
+export const Login: React.FC = () => {
+  const navigate = useNavigate();
   const { setUserInfo } = useUserInfo();
   const { setKGInfo } = useKGInfo();
-  const [id, setId] = useState('');
-  const navigate = useNavigate();  // Hook for navigation
 
-  // Handling the submit button action
-  const handleSubmit = () => {
-    console.log('Submitted ID:', id);
-    // Handling admin logons, set context and redirect to admin view
-    if(isAdmin(id)){
+  const [submitting, setSubmitting] = useState(false);
+
+  const onFinish = async (values: { id: string }) => {
+    const id = values.id?.trim();
+    if (!id) return;
+
+    setSubmitting(true);
+    try {
+      if (isAdmin(id)) {
         // Admin login
         setUserInfo({ id, isAdmin: true });
-        fetchFullKGData().then(data => {
-            setKGInfo({ nodes: data.nodes, relationships: data.relationships, loading: true, error: null });
-        }).catch(err => {
-            console.error('Error fetching full KG data:', err);
-        }).finally(() => {
-            setKGInfo(prev => ({ ...prev, loading: false }));  // Set loading flag to false
-            navigate('/admin');  // Redirect to admin view
+        setKGInfo(prev => ({ ...prev, loading: true, error: null }));
+
+        const data = await fetchFullKGData().catch();
+        setKGInfo({
+          nodes: data.nodes ?? [],
+          relationships: data.relationships ?? [],
+          loading: false,
+          error: null,
         });
-    }
-    // Handling student logons, set context and redirect to student view
-    else {
+
+        navigate('/admin');
+      } else {
+        // Student login
         setUserInfo({ id, isAdmin: false });
-        fetchKGDataById(id).then(data => {
-            if ('error' in data) {
-                setKGInfo({ nodes: [], relationships: [], loading: true, error: data.error });
-            } else {
-                setKGInfo({ nodes: data.nodes, relationships: data.relationships, loading: false, error: null });
-            }
-        }).catch(err => {
-            console.error('Error fetching KG data by ID:', err);
-        }).finally(() => {
-            setKGInfo(prev => ({ ...prev, loading: false }));  // Set loading flag to false
-            navigate('/student');  // Redirect to student view
+        setKGInfo(prev => ({ ...prev, loading: true, error: null }));
+
+        const data = await fetchKGDataById(id);
+        if ('error' in data) {
+          setKGInfo({ nodes: [], relationships: [], loading: false, error: data.error });
+          message.error(data.error || 'Failed to fetch knowledge graph data.');
+          return;
+        }
+        setKGInfo({
+          nodes: data.nodes ?? [],
+          relationships: data.relationships ?? [],
+          loading: false,
+          error: null,
         });
+
+        navigate('/student');
+      }
+    } catch (err: unknown) {
+      console.error(err);
+      if (err instanceof Error) {
+        message.error(err.message || 'Unexpected error. Please try again.');
+      } else {
+        message.error('Unexpected error. Please try again.');
+      }
+      // ensure loading false on error as well
+      setKGInfo(prev => ({ ...prev, loading: false }));
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  // Returning the HTML contents to display on the screen
   return (
-    <>
-      <h1>Enter ID</h1>
-      <input 
-        type="text" 
-        placeholder='ID' 
-        value={id} 
-        onChange={(e) => setId(e.target.value)} 
-      />
-      <button onClick={handleSubmit}>Submit</button>
-    </>
-  );
-}
+    <Layout style={{ minHeight: '100vh' }}>
+      <Header style={{ display: 'flex', alignItems: 'center', backgroundColor: '#001529' }}>
+        <h1 style={{ color: 'white', margin: 0 }}>KnowYourUni</h1>
+      </Header>
+      <Content
+        style={{
+          margin: '16px',
+          padding: '16px',
+          backgroundColor: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Card style={{ width: 420, maxWidth: '95%', boxShadow: '0 6px 18px rgba(0,0,0,0.08)' }}>
+          <Title level={3} style={{ marginBottom: 8 }}>
+            Sign in
+          </Title>
+          <Text type="secondary" style={{ display: 'block', marginBottom: 16 }}>
+            Enter your ID to continue.
+          </Text>
 
-export default App;
+          <Form layout="vertical" onFinish={onFinish} autoComplete="off" requiredMark={false}>
+            <Form.Item
+              label="ID"
+              name="id"
+              rules={[{ required: true, message: 'Please enter your ID' }]}
+            >
+              <Input
+                size="large"
+                placeholder="e.g., A12345678"
+                onPressEnter={() => { /* Form handles submission via onFinish */ }}
+              />
+            </Form.Item>
+
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                block
+                loading={submitting}
+                disabled={submitting}
+              >
+                Continue
+              </Button>
+            </Form.Item>
+          </Form>
+
+          <Text type="secondary">
+            Admins can sign in with their admin ID to access administrative tools.
+          </Text>
+        </Card>
+      </Content>
+
+      <Footer style={{ textAlign: 'center' }}>© 2025 KnowYourUni</Footer>
+    </Layout>
+  );
+};
+
+export default Login;
