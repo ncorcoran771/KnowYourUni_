@@ -1,6 +1,9 @@
 # UMBC data directory
 umbc_data/
 
+node_modules/
+
+
 # Python virtual environment directories
 venv/
 env/
