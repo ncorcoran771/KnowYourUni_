@@ -1,0 +1,13 @@
+:START_ID(RequirementGroup),:END_ID(Degree),:TYPE
+REQ-CORE-BS-ComputerScience-1,BS-ComputerScience-1,PART_OF
+REQ-ELECTIVE-1-BS-ComputerScience-1,BS-ComputerScience-1,PART_OF
+REQ-SPECIALIZATION-2-BS-ComputerScience-1,BS-ComputerScience-1,PART_OF
+REQ-CORE-BA-ComputerScience-2,BA-ComputerScience-2,PART_OF
+REQ-CONCENTRATION-1-BA-ComputerScience-2,BA-ComputerScience-2,PART_OF
+REQ-SPECIALIZATION-2-BA-ComputerScience-2,BA-ComputerScience-2,PART_OF
+REQ-CORE-BS-Biology-1,BS-Biology-1,PART_OF
+REQ-SPECIALIZATION-1-BS-Biology-1,BS-Biology-1,PART_OF
+REQ-CONCENTRATION-2-BS-Biology-1,BS-Biology-1,PART_OF
+REQ-CORE-BA-Biology-2,BA-Biology-2,PART_OF
+REQ-ELECTIVE-1-BA-Biology-2,BA-Biology-2,PART_OF
+REQ-ELECTIVE-2-BA-Biology-2,BA-Biology-2,PART_OF
