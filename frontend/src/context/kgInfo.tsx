@@ -5,8 +5,8 @@ import React, { createContext, useState, ReactNode, useContext } from 'react';
 export interface KGInfo {
     nodes: string[];
     relationships: string[];
-    loading: boolean;
-    error: string | null;
+    loading?: boolean;
+    error?: string | null;
 }
 
 export interface KGInfoContextType {
