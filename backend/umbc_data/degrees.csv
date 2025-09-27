@@ -1,5 +1,0 @@
-id:ID(Degree),name,department,type,totalCreditsRequired:int,coreCreditsRequired:int,electiveCreditsRequired:int
-BS-ComputerScience-1,Bachelor of Science in Computer Science,Computer Science,Bachelor,120,75,45
-BA-ComputerScience-2,Bachelor of Arts in Computer Science,Computer Science,Bachelor,120,60,60
-BS-Biology-1,Bachelor of Science in Biology,Biology,Bachelor,120,80,40
-BA-Biology-2,Bachelor of Arts in Biology,Biology,Bachelor,120,65,55

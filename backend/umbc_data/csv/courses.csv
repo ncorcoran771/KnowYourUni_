@@ -1,0 +1,101 @@
+id:ID(Course),name,department,credits:int,level:int,avgDifficulty:float,avgTimeCommitment:int,termAvailability,instructionModes,tags,visualLearnerSuccess:float,auditoryLearnerSuccess:float,kinestheticLearnerSuccess:float,readingLearnerSuccess:float
+CSSS 300,Computer Graphics I,Computer Science,3,300,3,7,Fall;Spring;Summer,In-person,Computer Science;Level-3,0.9299999999999999,0.77,0.84,0.79
+CSNN 300,Quantum Computing Analysis,Computer Science,1,300,1,5,Fall;Spring,In-person,Computer Science;Level-3;Analysis,0.97,0.67,0.82,0.67
+CSXX 400,Special Topics in Cloud Computing,Computer Science,1,400,3,8,Fall;Spring,In-person;Online,Computer Science;Level-4;Cloud,0.92,0.63,0.85,0.93
+CSKK 200,Robotics,Computer Science,4,200,4,9,Fall;Spring,In-person,Computer Science;Level-2;Robotics,0.75,0.64,0.62,0.62
+CSHH 200,IoT Development,Computer Science,3,200,2,5,Fall;Spring,In-person;Hybrid,Computer Science;Level-2;IoT,0.74,0.83,0.91,0.97
+CSGG 300,Edge Computing Methods,Computer Science,3,300,3,9,Fall;Spring,In-person;Online,Computer Science;Level-3;Methods,0.97,0.68,0.74,0.8
+CSFF 400,Special Topics in Distributed Systems,Computer Science,3,400,4,9,Fall;Spring,In-person;Online,Computer Science;Level-4;Systems;Distributed,0.62,0.72,0.6,0.86
+CSGG 300-2,Mobile Computing Theory,Computer Science,3,300,2,7,Fall;Spring,In-person,Computer Science;Level-3;Theory;Mobile,0.97,1.0,0.91,0.93
+CSZZ 200,Distributed Systems,Computer Science,3,200,4,7,Fall;Spring,In-person;Hybrid,Computer Science;Level-2;Systems;Distributed,0.94,0.67,0.62,0.96
+CSKK 200-4,Web Development,Computer Science,3,200,4,8,Fall;Spring;Summer,In-person,Computer Science;Level-2;Web,0.78,0.66,0.83,0.82
+CSRR 300,Machine Learning Methods,Computer Science,3,300,2,6,Fall;Spring,In-person;Online,Computer Science;Level-3;Methods,0.86,0.65,0.9,0.75
+CSXX 200,Algorithms,Computer Science,3,200,2,7,Fall;Spring,In-person;Hybrid,Computer Science;Level-2,0.65,0.77,0.78,0.76
+CSJJ 100,Introduction to Programming Languages,Computer Science,3,100,2,5,Fall;Spring,In-person;Online,Computer Science;Level-1;Intro;Programming,0.82,0.93,0.63,1.0
+CSBB 200,Machine Learning,Computer Science,3,200,2,7,Fall;Spring;Summer,In-person;Online,Computer Science;Level-2,0.67,0.95,0.79,0.81
+CSRR 300-6,Data Science Applications,Computer Science,4,300,3,9,Fall;Spring,In-person,Computer Science;Level-3;Data;Applications;Data Science,0.95,0.72,0.84,0.74
+CSSS 100,Introduction to Compiler Design,Computer Science,3,100,4,6,Fall;Spring,In-person;Online;Hybrid,Computer Science;Level-1;Intro;Design;Compiler,0.8800000000000001,0.67,0.72,0.91
+CSAA 300,Introduction to Programming Methods,Computer Science,3,300,3,8,Fall;Spring;Summer,In-person,Computer Science;Level-3;Intro;Programming;Methods,0.82,0.7,0.84,0.85
+CSAA 300-2,Theory of Computation Theory,Computer Science,3,300,3,8,Fall;Spring,In-person,Computer Science;Level-3;Theory,1.0,0.97,0.82,0.95
+CSJJ 100-4,Basic Big Data Analytics,Computer Science,3,100,4,7,Fall;Spring,In-person,Computer Science;Level-1;Data,0.77,0.75,0.69,0.7
+CSVV 100,Introduction to Computer Graphics,Computer Science,3,100,3,7,Fall;Spring;Summer,In-person;Online;Hybrid,Computer Science;Level-1;Intro,1.0,0.74,1.0,0.98
+CSRR 300-6-7,Database Systems Theory,Computer Science,4,300,4,10,Fall;Spring,In-person;Online;Hybrid,Computer Science;Level-3;Data;Theory;Systems,0.69,1.0,0.98,0.83
+CSRR 300-2,IoT Development Analysis,Computer Science,3,300,2,7,Fall;Spring,In-person,Computer Science;Level-3;Analysis;IoT,0.62,0.79,0.82,0.88
+CSII 200,Artificial Intelligence,Computer Science,3,200,4,7,Fall;Spring,In-person,Computer Science;Level-2,0.75,0.92,0.94,0.74
+CSPP 200,Data Structures,Computer Science,3,200,3,6,Fall;Spring,In-person;Online;Hybrid,Computer Science;Level-2;Data,0.84,0.64,0.63,0.65
+CSNN 100,Fundamentals of Robotics,Computer Science,1,100,4,7,Fall;Spring;Summer,In-person;Online,Computer Science;Level-1;Robotics,0.94,0.89,0.71,0.82
+CSAA 300-4,Programming Languages Methods,Computer Science,3,300,4,10,Fall;Spring,In-person,Computer Science;Level-3;Programming;Methods,0.8,0.94,0.88,0.96
+CSKK 400,Advanced Quantum Computing,Computer Science,3,400,2,7,Fall;Spring;Summer,In-person,Computer Science;Level-4;Advanced,0.62,0.86,0.93,0.65
+CSOO 100,Basic Computer Architecture,Computer Science,1,100,4,6,Fall;Spring,In-person;Online,Computer Science;Level-1,0.71,0.91,0.67,0.96
+CSXX 100,Fundamentals of Computer Graphics,Computer Science,1,100,3,6,Fall;Spring,In-person;Online,Computer Science;Level-1,1.0,0.83,0.81,0.8
+CSQQ 400,Special Topics in DevOps,Computer Science,1,400,4,9,Fall;Spring,In-person;Online,Computer Science;Level-4,0.66,0.73,0.97,0.87
+CSMM 100,Principles of Natural Language Processing,Computer Science,3,100,2,6,Fall;Spring;Summer,In-person,Computer Science;Level-1,0.83,0.75,0.71,0.92
+CSCC 300,Blockchain Technology Methods,Computer Science,3,300,2,7,Fall;Spring,In-person;Online,Computer Science;Level-3;Methods;AI;Blockchain,0.81,0.93,0.87,0.63
+CSVV 300,Data Science Applications,Computer Science,3,300,4,9,Fall;Spring,In-person;Online,Computer Science;Level-3;Data;Applications;Data Science,0.83,0.6,0.95,0.64
+CSYY 200,Computer Graphics,Computer Science,3,200,3,6,Fall;Spring;Summer,In-person;Online;Hybrid,Computer Science;Level-2,0.97,0.64,0.81,0.66
+CSKK 300,Natural Language Processing Analysis,Computer Science,3,300,3,9,Fall;Spring,In-person,Computer Science;Level-3;Analysis,0.77,0.86,0.67,0.78
+CSOO 300,Algorithms Analysis,Computer Science,2,300,3,8,Fall;Spring,In-person;Online,Computer Science;Level-3;Analysis,0.81,0.9,0.8,0.62
+CSUU 400,Special Topics in Database Systems,Computer Science,1,400,2,8,Fall;Spring,In-person;Online;Hybrid,Computer Science;Level-4;Data;Systems,0.77,0.7,0.75,0.99
+CSGG 400,Special Topics in IoT Development,Computer Science,4,400,1,6,Fall;Spring,In-person,Computer Science;Level-4;IoT,0.83,0.99,0.88,0.84
+CSSS 400,Special Topics in DevOps,Computer Science,3,400,5,10,Fall;Spring,In-person;Hybrid,Computer Science;Level-4,0.62,0.74,0.83,0.84
+CSDD 200,Algorithms,Computer Science,2,200,3,8,Fall;Spring;Summer,In-person;Online,Computer Science;Level-2,0.99,0.67,0.76,0.85
+CSMM 300,Algorithms Analysis,Computer Science,4,300,4,10,Fall;Spring;Summer,In-person,Computer Science;Level-3;Analysis,0.72,0.66,0.88,0.97
+CSUU 200,Operating Systems,Computer Science,3,200,3,6,Fall;Spring;Summer,In-person;Online,Computer Science;Level-2;Systems,0.98,0.95,0.74,0.98
+CSRR 400,Advanced Operating Systems,Computer Science,3,400,2,9,Fall;Spring;Summer,In-person;Hybrid,Computer Science;Level-4;Advanced;Systems,0.66,0.78,0.96,0.77
+CSOO 300-9,Algorithms Analysis,Computer Science,4,300,4,8,Fall;Spring,In-person;Hybrid,Computer Science;Level-3;Analysis,0.75,0.65,0.79,0.77
+CSEE 200,Mobile Computing,Computer Science,3,200,4,7,Fall;Spring,In-person,Computer Science;Level-2;Mobile,0.69,0.72,0.89,0.78
+CSGG 300-8,Cybersecurity Applications,Computer Science,3,300,2,8,Fall;Spring;Summer,In-person;Online,Computer Science;Level-3;Applications;Security,0.97,0.68,0.62,0.72
+CSAA 200,Cloud Computing,Computer Science,1,200,3,6,Fall;Spring;Summer,In-person,Computer Science;Level-2;Cloud,0.74,0.63,0.78,0.89
+CSYY 200-1,IoT Development,Computer Science,3,200,2,7,Fall;Spring,In-person,Computer Science;Level-2;IoT,0.88,0.88,0.6,0.79
+CSZZ 100,Fundamentals of IoT Development,Computer Science,3,100,2,6,Fall;Spring,In-person;Online;Hybrid,Computer Science;Level-1;IoT,0.62,0.83,0.66,0.81
+CSVV 200,Web Development,Computer Science,1,200,3,6,Fall;Spring,In-person;Hybrid,Computer Science;Level-2;Web,0.94,0.99,0.86,0.73
+BFFF 100,Introduction to Bioinformatics,Biology,4,100,3,5,Fall;Spring;Summer,In-person;Online;Hybrid,Biology;Level-1;Intro;Bioinformatics,0.8,0.94,0.91,0.63
+BQQQ 300,Behavioral Ecology I,Biology,2,300,5,9,Fall;Spring,In-person,Biology;Level-3;Ecology;Behavioral,0.92,0.99,0.95,0.67
+BFFF 400,Topics in General Biology,Biology,4,400,4,11,Fall;Spring,In-person;Online,Biology;Level-4,0.75,0.75,0.86,0.7
+BUUU 200,Systems Biology,Biology,3,200,4,7,Fall;Spring,In-person;Hybrid,Biology;Level-2;Systems,0.64,0.99,0.81,0.71
+BBBB 100,Principles of Ecology,Biology,3,100,2,6,Fall;Spring,In-person;Online;Hybrid,Biology;Level-1;Ecology,0.98,0.72,0.68,0.92
+BJJJ 300,Animal Behavior Applications,Biology,3,300,2,6,Fall;Spring,In-person;Online,Biology;Level-3;Animal,0.69,0.66,0.71,0.61
+BIII 200,Cell Biology,Biology,3,200,3,8,Fall;Spring,In-person;Online,Biology;Level-2;Cell,0.79,0.62,0.94,0.84
+BCCC 200,Developmental Biology,Biology,3,200,2,7,Fall;Spring,In-person,Biology;Level-2;Development,0.65,0.84,0.88,0.65
+BOOO 200,Behavioral Ecology,Biology,3,200,1,6,Fall;Spring,In-person,Biology;Level-2;Ecology;Behavioral,0.99,0.87,0.65,0.98
+BUUU 300,Molecular Biology I,Biology,2,300,2,8,Fall;Spring,In-person;Online;Hybrid,Biology;Level-3;Molecular,0.99,0.81,0.73,0.78
+BRRR 300,Biotechnology Methods,Biology,1,300,4,8,Fall;Spring;Summer,In-person;Online,Biology;Level-3;Biotech,0.65,0.9,0.87,0.84
+BFFF 300,Plant Biology Theory,Biology,3,300,3,8,Fall;Spring,In-person;Online;Hybrid,Biology;Level-3;Plant,0.98,0.8899999999999999,0.68,0.77
+BXXX 200,Metabolomics,Biology,3,200,5,10,Fall;Spring,In-person;Hybrid,Biology;Level-2,0.67,0.67,0.62,0.82
+BIII 300,Synthetic Biology I,Biology,3,300,3,8,Fall;Spring;Summer,In-person;Online;Hybrid,Biology;Level-3,0.79,0.99,0.89,0.82
+BMMM 200,Stem Cell Biology,Biology,3,200,2,7,Fall;Spring;Summer,In-person;Online,Biology;Level-2;Cell;Stem Cell,0.79,0.94,0.85,0.62
+BTTT 300,Behavioral Ecology Analysis,Biology,3,300,1,6,Fall;Spring,In-person;Hybrid,Biology;Level-3;Ecology;Behavioral,0.75,0.74,1.0,0.64
+BBBB 200,Stem Cell Biology,Biology,4,200,4,7,Fall;Spring;Summer,In-person;Hybrid,Biology;Level-2;Cell;Stem Cell,0.98,0.79,0.94,0.74
+BQQQ 200,Cell Physiology,Biology,3,200,4,7,Fall;Spring;Summer,In-person,Biology;Level-2;Cell;Physiology,0.97,0.75,0.82,0.76
+BPPP 400,Special Topics in Developmental Biology,Biology,3,400,2,9,Fall;Spring;Summer,In-person,Biology;Level-4;Development,0.87,0.78,0.68,0.92
+BGGG 300,Environmental Biology Theory,Biology,3,300,3,9,Fall;Spring;Summer,In-person;Online,Biology;Level-3;Environmental,0.89,0.98,0.87,0.71
+BQQQ 300-9,Animal Behavior Analysis,Biology,4,300,1,5,Fall;Spring,In-person,Biology;Level-3;Animal,0.77,0.8,0.75,0.75
+BNNN 200,Animal Behavior,Biology,3,200,3,7,Fall;Spring;Summer,In-person;Online;Hybrid,Biology;Level-2;Animal,0.79,0.77,0.85,0.66
+BOOO 200-2,Biotechnology,Biology,3,200,3,8,Fall;Spring,In-person;Online,Biology;Level-2;Biotech,0.76,0.85,0.79,0.83
+BEEE 300,Cell Physiology Theory,Biology,4,300,2,8,Fall;Spring;Summer,In-person,Biology;Level-3;Cell;Physiology,0.61,1.0,0.83,0.92
+BWWW 200,Metabolomics,Biology,4,200,3,7,Fall;Spring,In-person,Biology;Level-2,0.97,0.66,0.69,0.95
+BEEE 200,Parasitology,Biology,1,200,3,6,Fall;Spring;Summer,In-person;Online,Biology;Level-2;Parasitology,0.83,0.99,0.86,0.71
+BYYY 200,Tropical Biology,Biology,3,200,3,8,Fall;Spring,In-person;Hybrid,Biology;Level-2;Tropical,0.88,0.65,0.79,0.63
+BZZZ 400,Topics in Population Genetics,Biology,2,400,3,10,Fall;Spring,In-person;Online;Hybrid,Biology;Level-4;Genetics;Population,0.8,0.83,0.75,0.64
+BNNN 200-7,Developmental Biology,Biology,1,200,5,10,Fall;Spring,In-person,Biology;Level-2;Development,0.91,0.69,0.97,0.84
+BMMM 100,Basic Molecular Genetics,Biology,2,100,3,5,Fall;Spring,In-person;Hybrid,Biology;Level-1;Molecular;Genetics,0.6,0.93,0.97,0.95
+BHHH 100,Fundamentals of Parasitology,Biology,3,100,2,5,Fall;Spring,In-person;Online,Biology;Level-1;Parasitology,0.69,0.99,0.87,0.83
+BRRR 300-8,Biochemistry Theory,Biology,3,300,3,9,Fall;Spring,In-person;Online,Biology;Level-3;Biochemistry,0.9,1.0,0.92,0.93
+BLLL 100,Principles of Biotechnology,Biology,3,100,3,7,Fall;Spring,In-person,Biology;Level-1;Biotech,0.61,0.79,0.92,0.61
+BBBB 100-3,Principles of Animal Behavior,Biology,3,100,3,7,Fall;Spring;Summer,In-person;Online,Biology;Level-1;Animal,0.89,0.82,0.71,0.64
+BUUU 300-4,Developmental Biology Methods,Biology,3,300,2,7,Fall;Spring,In-person;Hybrid,Biology;Level-3;Development,0.78,0.79,1.0,0.93
+BEEE 100,Introduction to Synthetic Biology,Biology,3,100,3,7,Fall;Spring,In-person;Online;Hybrid,Biology;Level-1;Intro,0.63,0.88,0.89,0.96
+BFFF 300-2,Molecular Genetics I,Biology,2,300,2,6,Fall;Spring;Summer,In-person;Online,Biology;Level-3;Molecular;Genetics,0.87,0.74,0.66,0.82
+BZZZ 400-3,Special Topics in Animal Behavior,Biology,2,400,4,11,Fall;Spring,In-person;Online,Biology;Level-4;Animal,0.68,0.89,0.74,0.69
+BWWW 200-2,Computational Biology,Biology,3,200,2,5,Fall;Spring,In-person;Online;Hybrid,Biology;Level-2,0.82,0.86,0.79,0.9
+BBBB 200-9,Proteomics,Biology,3,200,3,6,Fall;Spring;Summer,In-person;Online,Biology;Level-2,0.94,0.82,0.71,0.86
+BUUU 100,Fundamentals of Environmental Biology,Biology,3,100,3,5,Fall;Spring;Summer,In-person;Online,Biology;Level-1;Environmental,0.71,0.89,0.97,0.69
+BSSS 100,Fundamentals of Tropical Biology,Biology,3,100,2,4,Fall;Spring,In-person;Hybrid,Biology;Level-1;Tropical,0.62,0.75,0.89,0.85
+BDDD 400,Topics in Biochemistry,Biology,3,400,2,8,Fall;Spring;Summer,In-person;Online;Hybrid,Biology;Level-4;Biochemistry,0.69,0.8,0.94,0.69
+BKKK 300,Molecular Genetics Theory,Biology,2,300,3,9,Fall;Spring,In-person;Hybrid,Biology;Level-3;Molecular;Genetics,0.99,0.8999999999999999,0.72,0.93
+BFFF 100-4,Introduction to Stem Cell Biology,Biology,3,100,2,4,Fall;Spring;Summer,In-person,Biology;Level-1;Intro;Cell;Stem Cell,0.99,0.86,0.83,0.83
+BSSS 300,Virology Methods,Biology,3,300,3,7,Fall;Spring,In-person,Biology;Level-3;Virology,0.74,0.73,0.89,0.89
+BGGG 300-2,Behavioral Ecology Theory,Biology,3,300,3,9,Fall;Spring,In-person;Online,Biology;Level-3;Ecology;Behavioral,0.76,1.0,0.96,0.7
+BFFF 100-4-1,Fundamentals of Genomics,Biology,3,100,3,7,Fall;Spring;Summer,In-person;Online;Hybrid,Biology;Level-1;Genomics,0.67,0.79,0.78,0.67
+BGGG 300-1,Molecular Genetics Analysis,Biology,3,300,2,8,Fall;Spring,In-person;Online;Hybrid,Biology;Level-3;Molecular;Genetics,0.72,0.89,0.88,0.66
+BNNN 400,Special Topics in Microbiology,Biology,3,400,2,9,Fall;Spring,In-person;Online;Hybrid,Biology;Level-4;Micro,0.92,0.91,0.98,0.75
