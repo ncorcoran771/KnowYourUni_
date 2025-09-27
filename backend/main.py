@@ -21,18 +21,18 @@ def health():
     return {"status": "ok"}
 
 # Validate a given student id
-@app.post("/api/validate/${id}")
+@app.get("/api/validate/${id}")
 def validate_id(id: str) -> bool:
     v: bool = qu.validate_student_id(id)
     return {"ok": v}
 
 # Return all nodes/data for a specific user
-@app.post("/api/kg/${id}")
+@app.get("/api/kg/${id}")
 def get_id_data(id: str) -> dict:
     return qu.fetch_student_data(id)
 
 # Return all nodes/data in the KG
-@app.post("/api/kg/")
+@app.get("/api/kg/")
 def get_all_data() -> dict:
     return qu.fetch_full_kg_data()
 
