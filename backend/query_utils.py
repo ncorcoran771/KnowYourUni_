@@ -6,10 +6,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Connecting to Neo4j and setting up the driver
-NEO4J_URI = os.getenv("NEO4J_URI", "bolt://localhost:7687")
-NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
-NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "password")
-driver = GraphDatabase.driver(NEO4J_URI, auth=basic_auth(NEO4J_USER, NEO4J_PASSWORD))
+NEO4J_URI = f'"neo4j+s://{os.getenv("NEO4J_NAME")}.databases.neo4j.io"'
+NEO4J_AUTH = ("neo4j", os.getenv("NEO4J_PASSWORD"))
+driver = GraphDatabase.driver(NEO4J_URI, auth=NEO4J_AUTH)
 
 # --------- Validating student ID ---------
 def validate_student_id(student_id: str) -> bool:
