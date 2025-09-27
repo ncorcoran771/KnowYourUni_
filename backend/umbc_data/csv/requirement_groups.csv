@@ -1,0 +1,13 @@
+id:ID(RequirementGroup),name,description,minimumCourses:int,minimumCredits:int
+REQ-CORE-BS-ComputerScience-1,Core Computer Science Requirements,Required courses for Bachelor of Science in Computer Science,14,38
+REQ-SPECIALIZATION-1-BS-ComputerScience-1,Computer Science Specialization Requirements - Group 1,Specialization courses for Bachelor of Science in Computer Science,3,9
+REQ-ELECTIVE-2-BS-ComputerScience-1,Computer Science Elective Requirements - Group 2,Elective courses for Bachelor of Science in Computer Science,6,18
+REQ-CORE-BA-ComputerScience-2,Core Computer Science Requirements,Required courses for Bachelor of Arts in Computer Science,15,37
+REQ-SPECIALIZATION-1-BA-ComputerScience-2,Computer Science Specialization Requirements - Group 1,Specialization courses for Bachelor of Arts in Computer Science,3,9
+REQ-ELECTIVE-2-BA-ComputerScience-2,Computer Science Elective Requirements - Group 2,Elective courses for Bachelor of Arts in Computer Science,4,12
+REQ-CORE-BS-Biology-1,Core Biology Requirements,Required courses for Bachelor of Science in Biology,19,55
+REQ-ELECTIVE-1-BS-Biology-1,Biology Elective Requirements - Group 1,Elective courses for Bachelor of Science in Biology,4,12
+REQ-CONCENTRATION-2-BS-Biology-1,Biology Concentration Requirements - Group 2,Concentration courses for Bachelor of Science in Biology,6,18
+REQ-CORE-BA-Biology-2,Core Biology Requirements,Required courses for Bachelor of Arts in Biology,13,33
+REQ-SPECIALIZATION-1-BA-Biology-2,Biology Specialization Requirements - Group 1,Specialization courses for Bachelor of Arts in Biology,3,9
+REQ-SPECIALIZATION-2-BA-Biology-2,Biology Specialization Requirements - Group 2,Specialization courses for Bachelor of Arts in Biology,3,9

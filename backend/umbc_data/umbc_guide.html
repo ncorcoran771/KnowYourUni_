@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>UMBC Neo4j Academic Graph Browser Guide</title>
+</head>
+<body>
+  <article class="guide" data-title="UMBC Academic Pathways Guide">
+    <carousel class="deck container-fluid">
+      <slide class="row-fluid">
+        <div class="col-sm-12">
+          <h3>UMBC Academic Graph - Personalized Degree Pathways</h3>
+          <p>This guide demonstrates key queries for exploring and analyzing the UMBC academic graph database.</p>
+          <p>The data model represents students, courses, faculty, degrees, and their interrelationships to power personalized degree pathway planning.</p>
+          <h4>Data Overview</h4>
+          <figure>
+            <pre class="code runnable">
+CALL db.schema.visualization
+            </pre>
+          </figure>
+        </div>
+      </slide>
+      
+      <slide class="row-fluid">
+        <div class="col-sm-12">
+          <h3>Find Optimal Next Courses for a Student</h3>
+          <p>This query finds the best next courses for a specific student based on their learning style, prerequisites, and term availability.</p>
+          <figure>
+            <pre class="code runnable">
+// Find optimal next courses based on learning style and prerequisites
+MATCH (student:Student)-[:PURSUING]->(degree:Degree)
+WHERE student.id = 'AB12345' // Replace with a real campus ID from the dataset
+MATCH (term:Term {id: 'Fall2023'}) // Update with appropriate term
+MATCH (course:Course)-[:OFFERED_IN]->(term)
+MATCH (course)-[:FULFILLS]->(:RequirementGroup)-[:PART_OF]->(degree)
+
+// Ensure prerequisites are met
+WHERE NOT EXISTS {
+  MATCH (prereq:Course)-[:PREREQUISITE_FOR]->(course)
+  WHERE NOT (student)-[:COMPLETED]->(prereq)
+}
+
+// Student hasn't already completed the course
+AND NOT (student)-[:COMPLETED]->(course)
+
+// Find similar students and their experiences with these courses
+OPTIONAL MATCH (student)-[sim:SIMILAR_LEARNING_STYLE]->(similar:Student)-[comp:COMPLETED]->(course)
+WHERE sim.similarity > 0.7
+
+WITH student, course, term, degree,
+     CASE WHEN COUNT(comp) > 0 
+          THEN AVG(comp.difficulty) 
+          ELSE course.avgDifficulty END AS predictedDifficulty,
+     COUNT(comp) AS similarStudentsCount
+
+// Check how many future courses this would unlock
+OPTIONAL MATCH (course)-[:PREREQUISITE_FOR]->(futureCourse)
+WHERE (futureCourse)-[:FULFILLS]->(:RequirementGroup)-[:PART_OF]->(degree)
+
+RETURN course.id AS courseId,
+       course.name AS courseName,
+       course.credits AS credits,
+       predictedDifficulty,
+       COUNT(futureCourse) AS unlockedCourses,
+       similarStudentsCount,
+       course.instructionModes AS availableModes
+ORDER BY predictedDifficulty ASC, unlockedCourses DESC, credits DESC
+LIMIT 5
+            </pre>
+          </figure>
+        </div>
+      </slide>
+      
+      <slide class="row-fluid">
+        <div class="col-sm-12">
+          <h3>Find Balanced Course Load</h3>
+          <p>This query helps students find a balanced course load with appropriate difficulty distribution.</p>
+          <figure>
+            <pre class="code runnable">
+// Find balanced course combinations for a student
+MATCH (student:Student {id: 'AB12345'})-[:PURSUING]->(degree:Degree)
+MATCH (term:Term {id: 'Fall2023'})
+
+// Find available courses for the upcoming term
+MATCH (course:Course)-[:OFFERED_IN]->(term)
+WHERE (course)-[:FULFILLS]->(:RequirementGroup)-[:PART_OF]->(degree)
+  AND NOT (student)-[:COMPLETED]->(course)
+  AND NOT EXISTS {
+    MATCH (prereq:Course)-[:PREREQUISITE_FOR]->(course)
+    WHERE NOT (student)-[:COMPLETED]->(prereq)
+  }
+
+// Predict personalized difficulty
+OPTIONAL MATCH (student)-[:SIMILAR_LEARNING_STYLE]->(similar:Student)-[comp:COMPLETED]->(course)
+WITH student, course, term, degree,
+     CASE WHEN COUNT(comp) > 0 
+          THEN AVG(comp.difficulty) 
+          ELSE course.avgDifficulty END AS predictedDifficulty,
+     course.credits AS credits,
+     course.id AS courseId,
+     course.name AS courseName
+
+// Return the courses in a way they can be manually combined
+RETURN courseId, 
+       courseName, 
+       credits, 
+       predictedDifficulty,
+       CASE 
+         WHEN predictedDifficulty <= 2 THEN 'Easy'
+         WHEN predictedDifficulty <= 3.5 THEN 'Moderate'
+         ELSE 'Challenging'
+       END AS difficultyCategory
+ORDER BY predictedDifficulty DESC
+            </pre>
+          </figure>
+        </div>
+      </slide>
+      
+      <slide class="row-fluid">
+        <div class="col-sm-12">
+          <h3>Visualize Course Prerequisite Structure</h3>
+          <p>This query generates a visualization of course prerequisites to help understand dependencies.</p>
+          <figure>
+            <pre class="code runnable">
+// Visualize prerequisite structure for courses in a degree program
+MATCH (degree:Degree {id: 'BS-ComputerScience-1'})  // Update with an actual degree ID
+MATCH (course:Course)-[:FULFILLS]->(:RequirementGroup)-[:PART_OF]->(degree)
+OPTIONAL MATCH prereqPath = (course)<-[:PREREQUISITE_FOR*1..3]-(prereq:Course)
+RETURN course, prereqPath, prereq
+LIMIT 50 // Limit to prevent overwhelming visualization
+            </pre>
+          </figure>
+        </div>
+      </slide>
+      
+      <slide class="row-fluid">
+        <div class="col-sm-12">
+          <h3>Find Students with Similar Learning Styles</h3>
+          <p>This query helps identify students with similar learning preferences who might benefit from similar course pathways.</p>
+          <figure>
+            <pre class="code runnable">
+// Find students with similar learning styles and their course histories
+MATCH (student:Student {id: 'AB12345'})  // Update with actual student ID
+MATCH (student)-[sim:SIMILAR_LEARNING_STYLE]->(similar:Student)
+WHERE sim.similarity > 0.8
+OPTIONAL MATCH (similar)-[comp:COMPLETED]->(course:Course)
+WHERE comp.grade IN ['A', 'A-', 'B+']
+WITH similar, 
+     COUNT(DISTINCT course) AS successfulCourseCount,
+     COLLECT(DISTINCT {course: course.name, grade: comp.grade}) AS coursesTaken
+RETURN similar.id AS similarStudentId,
+       similar.learningStyle,
+       successfulCourseCount,
+       similar.preferredCourseLoad,
+       similar.preferredPace,
+       coursesTaken
+ORDER BY successfulCourseCount DESC
+LIMIT 10
+            </pre>
+          </figure>
+        </div>
+      </slide>
+      
+      <slide class="row-fluid">
+        <div class="col-sm-12">
+          <h3>Analyze Course Centrality</h3>
+          <p>Use Graph Data Science to identify key courses in the curriculum based on their centrality in the prerequisite network.</p>
+          <figure>
+            <pre class="code runnable">
+// Create a graph projection
+CALL gds.graph.project(
+  'prereqGraph',
+  ['Course'],
+  {
+    PREREQ: {
+      type: 'PREREQUISITE_FOR',
+      orientation: 'REVERSE'
+    }
+  }
+)
+
+// Run PageRank to find central courses
+CALL gds.pageRank.stream('prereqGraph')
+YIELD nodeId, score
+WITH gds.util.asNode(nodeId) AS course, score
+WHERE course.department = 'Computer Science'  // Change to analyze a specific department
+RETURN course.id, course.name, score AS centralityScore
+ORDER BY centralityScore DESC
+LIMIT 20
+
+// Drop the graph projection when done
+// CALL gds.graph.drop('prereqGraph')
+            </pre>
+          </figure>
+        </div>
+      </slide>
+    </carousel>
+  </article>
+</body>
+</html>

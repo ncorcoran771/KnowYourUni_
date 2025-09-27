@@ -1,0 +1,31 @@
+id:ID(Faculty),name,department,teachingStyle,avgRating:float
+F01001,Professor Lydia Garcia,Biology,Case Study;Flipped Classroom;Problem-Based,3.6
+F01002,Dr. Julie Hunt,Computer Science,Activity-Based;Socratic;Lecture,4.7
+F01003,Dr. Justin Alvarez,Computer Science,Flipped Classroom;Socratic;Research-Oriented,3.5
+F01004,Dr. Andrew Suarez,Biology,Hands-on;Socratic,4.7
+F01005,Assoc. Prof. Mallory Cantu,Biology,Problem-Based;Activity-Based,4.7
+F01006,Professor Martha Fox,Biology,Discussion;Activity-Based;Lecture,4.7
+F01007,Asst. Prof. Alan Rivera,Biology,Hands-on,4.2
+F01008,Dr. Nicole Warren,Biology,Demonstrative,4.8
+F01009,Dr. Ronnie Hansen,Computer Science,Flipped Classroom;Demonstrative,3.7
+F01010,Dr. David Frazier,Computer Science,Lecture,4.7
+F01011,Asst. Prof. Jodi Blair,Computer Science,Hands-on,4.3
+F01012,Dr. Lori Morgan,Biology,Case Study,4.9
+F01013,Dr. Jonathan Spencer,Biology,Research-Oriented,3.3
+F01014,Dr. Rebecca Brown,Biology,Discussion,3.5
+F01015,Professor Tammy Howard,Computer Science,Hands-on;Discussion,3.2
+F01016,Professor Derrick Wilson,Computer Science,Activity-Based,4.7
+F01017,Assoc. Prof. Jason Blackwell,Computer Science,Collaborative,3.1
+F01018,Asst. Prof. David Logan,Computer Science,Demonstrative;Case Study,4.4
+F01019,Asst. Prof. Joseph Mcgee,Biology,Demonstrative;Case Study,3.5
+F01020,Dr. Jessica Ramirez,Biology,Socratic;Hands-on;Research-Oriented,4.0
+F01021,Dr. Brandy Lee,Computer Science,Case Study;Flipped Classroom;Demonstrative,4.3
+F01022,Dr. Laura Hall,Computer Science,Flipped Classroom,3.6
+F01023,Asst. Prof. Jonathan Washington,Computer Science,Research-Oriented;Problem-Based;Activity-Based,4.6
+F01024,Dr. Amanda Smith,Computer Science,Lecture;Discussion;Case Study,4.2
+F01025,Dr. Allen Turner,Biology,Socratic;Discussion,4.8
+F01026,Dr. Jill Goodwin,Biology,Project-Based,4.9
+F01027,Dr. Janet Barton,Computer Science,Research-Oriented,3.7
+F01028,Dr. Benjamin Macias,Biology,Lecture;Hands-on;Case Study,4.5
+F01029,Dr. Benjamin Park,Biology,Problem-Based,4.1
+F01030,Dr. Christopher Day,Computer Science,Flipped Classroom;Discussion,5.0

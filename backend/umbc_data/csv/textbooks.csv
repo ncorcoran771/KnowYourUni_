@@ -1,0 +1,177 @@
+id:ID(Textbook),name,publisher,price:float,pages:int,edition:int,publicationYear:int,isbn,category
+TXT-Com-300-1,Advanced Computer Graphics I,Wiley,95.45,680,3,2020,978-946-386-9,Systems
+TXT-Com-300-1,Advanced Quantum Computing Analysis,Pearson,102.87,746,4,2021,978-438-015-3,Systems
+TXT-Com-300-2,Quantum Computing Analysis: Case Studies,McGraw-Hill,59.49,507,4,2020,978-548-681-1,Systems
+TXT-Com-300-3,Quantum Computing Analysis: Principles and Applications,McGraw-Hill,108.84,702,5,2019,978-594-443-0,Systems
+TXT-Com-400-1,Advanced Special Topics in Cloud Computing,McGraw-Hill,50.74,583,2,2023,978-901-625-0,Systems
+TXT-Com-200-1,Introduction to Robotics,Wiley,97.59,810,5,2019,978-380-570-1,Systems
+TXT-Com-200-2,Robotics: A Comprehensive Guide,McGraw-Hill,56.16,581,5,2020,978-105-673-6,Systems
+TXT-Com-200-3,Robotics: Theory and Practice,Wiley,90.19,841,2,2019,978-047-226-3,Systems
+TXT-Com-200-1,Introduction to IoT Development,Pearson,127.16,686,5,2018,978-128-554-6,Systems
+TXT-Com-200-2,IoT Development: A Comprehensive Guide,Pearson,74.96,813,1,2022,978-449-900-2,Systems
+TXT-Com-200-3,IoT Development: Case Studies,Wiley,79.55,844,4,2022,978-487-803-3,Systems
+TXT-Com-300-1,Advanced Edge Computing Methods,Wiley,84.2,676,2,2022,978-780-312-6,Systems
+TXT-Com-400-1,Advanced Special Topics in Distributed Systems,McGraw-Hill,107.88,452,1,2019,978-692-569-7,Systems
+TXT-Com-400-2,Special Topics in Distributed Systems: Problem Solving,Pearson,51.96,653,3,2018,978-624-228-2,Systems
+TXT-Com-300-1,Advanced Mobile Computing Theory,MIT Press,84.17,499,4,2017,978-536-586-6,Theory
+TXT-Com-200-1,Introduction to Distributed Systems,Pearson,115.1,581,4,2023,978-118-186-2,Systems
+TXT-Com-200-2,Distributed Systems: Case Studies,Wiley,98.12,645,5,2019,978-714-746-2,Systems
+TXT-Com-200-1,Introduction to Web Development,McGraw-Hill,78.57,952,4,2020,978-855-373-4,Systems
+TXT-Com-200-2,Web Development: A Comprehensive Guide,McGraw-Hill,105.21,995,3,2022,978-905-084-7,Systems
+TXT-Com-200-3,Web Development: Case Studies,Pearson,115.45,887,4,2023,978-488-748-9,Systems
+TXT-Com-300-1,Advanced Machine Learning Methods,Pearson,106.02,702,1,2018,978-048-817-1,Systems
+TXT-Com-300-2,Machine Learning Methods: A Comprehensive Guide,Pearson,71.83,683,2,2018,978-048-271-1,Systems
+TXT-Com-200-1,Introduction to Algorithms,Springer,86.34,551,4,2018,978-580-755-7,Theory
+TXT-Com-200-2,Algorithms: Theory and Practice,MIT Press,64.96,427,5,2020,978-059-924-6,Theory
+TXT-Com-200-3,Algorithms: Principles and Applications,Springer,96.79,648,1,2019,978-625-034-6,Theory
+TXT-Com-100-1,Introduction to Introduction to Programming Languages,O'Reilly,80.95,997,5,2023,978-336-478-5,Programming
+TXT-Com-200-1,Introduction to Machine Learning,Pearson,52.12,763,5,2022,978-059-654-0,Systems
+TXT-Com-300-1,Advanced Data Science Applications,Wiley,55.85,722,1,2017,978-950-378-8,Systems
+TXT-Com-300-2,Data Science Applications: Principles and Applications,Wiley,93.14,1000,4,2020,978-478-258-5,Systems
+TXT-Com-100-1,Introduction to Introduction to Compiler Design,Wiley,60.5,598,2,2020,978-143-056-3,Systems
+TXT-Com-300-1,Advanced Introduction to Programming Methods,Manning,51.15,856,2,2020,978-967-650-3,Programming
+TXT-Com-300-2,Introduction to Programming Methods: Theory and Practice,O'Reilly,94.6,824,1,2017,978-093-695-4,Programming
+TXT-Com-300-3,Introduction to Programming Methods: Case Studies,Addison-Wesley,88.22,696,4,2018,978-600-285-0,Programming
+TXT-Com-300-1,Advanced Theory of Computation Theory,Cambridge University Press,144.51,474,1,2021,978-435-123-4,Theory
+TXT-Com-300-2,Theory of Computation Theory: A Comprehensive Guide,Springer,122.76,829,2,2018,978-903-514-4,Theory
+TXT-Com-100-1,Introduction to Basic Big Data Analytics,Pearson,64.31,602,5,2022,978-528-838-6,Systems
+TXT-Com-100-2,Basic Big Data Analytics: A Comprehensive Guide,Wiley,67.0,868,2,2019,978-289-170-2,Systems
+TXT-Com-100-3,Basic Big Data Analytics: Theory and Practice,Pearson,71.44,669,3,2019,978-574-072-0,Systems
+TXT-Com-100-1,Introduction to Introduction to Computer Graphics,Wiley,79.04,589,1,2019,978-933-249-8,Systems
+TXT-Com-100-2,Introduction to Computer Graphics: Theory and Practice,McGraw-Hill,82.05,938,2,2022,978-271-368-5,Systems
+TXT-Com-100-3,Introduction to Computer Graphics: Problem Solving,McGraw-Hill,67.99,529,4,2020,978-747-228-8,Systems
+TXT-Com-300-1,Advanced Database Systems Theory,Springer,78.74,796,2,2022,978-500-842-9,Theory
+TXT-Com-300-1,Advanced IoT Development Analysis,McGraw-Hill,107.25,412,3,2018,978-548-745-5,Systems
+TXT-Com-200-1,Introduction to Artificial Intelligence,Pearson,83.2,751,1,2022,978-388-492-1,Systems
+TXT-Com-200-2,Artificial Intelligence: Case Studies,Pearson,72.43,823,3,2020,978-811-943-6,Systems
+TXT-Com-200-1,Introduction to Data Structures,Pearson,90.19,616,2,2019,978-775-163-1,Systems
+TXT-Com-200-2,Data Structures: Theory and Practice,Pearson,110.53,504,1,2018,978-589-521-7,Systems
+TXT-Com-200-3,Data Structures: Case Studies,McGraw-Hill,99.7,495,2,2023,978-433-074-5,Systems
+TXT-Com-100-1,Introduction to Fundamentals of Robotics,Pearson,103.24,780,2,2020,978-091-252-8,Systems
+TXT-Com-100-2,Fundamentals of Robotics: A Comprehensive Guide,Wiley,121.54,771,1,2019,978-324-138-4,Systems
+TXT-Com-300-1,Advanced Programming Languages Methods,Manning,118.88,378,4,2017,978-501-316-5,Programming
+TXT-Com-300-2,Programming Languages Methods: Principles and Applications,O'Reilly,78.76,1275,4,2023,978-061-525-1,Programming
+TXT-Com-400-1,Advanced Advanced Quantum Computing,Wiley,75.17,629,2,2021,978-924-124-0,Systems
+TXT-Com-400-2,Advanced Quantum Computing: Problem Solving,McGraw-Hill,55.92,638,2,2016,978-271-930-3,Systems
+TXT-Com-100-1,Introduction to Basic Computer Architecture,McGraw-Hill,77.43,931,1,2021,978-291-714-0,Systems
+TXT-Com-100-1,Introduction to Fundamentals of Computer Graphics,Wiley,60.75,1280,1,2020,978-737-934-9,Systems
+TXT-Com-400-1,Advanced Special Topics in DevOps,Pearson,91.17,423,1,2021,978-823-244-2,Systems
+TXT-Com-100-1,Introduction to Principles of Natural Language Processing,McGraw-Hill,116.94,675,5,2021,978-791-474-1,Systems
+TXT-Com-100-2,Principles of Natural Language Processing: Theory and Practice,McGraw-Hill,110.08,861,1,2019,978-714-889-9,Systems
+TXT-Com-100-3,Principles of Natural Language Processing: Principles and Applications,Pearson,83.76,751,2,2022,978-659-542-1,Systems
+TXT-Com-300-1,Advanced Blockchain Technology Methods,Pearson,120.28,549,5,2020,978-612-157-1,Systems
+TXT-Com-300-2,Blockchain Technology Methods: Principles and Applications,McGraw-Hill,60.05,384,3,2022,978-843-614-2,Systems
+TXT-Com-300-1,Advanced Data Science Applications,Pearson,121.25,569,3,2022,978-583-983-5,Systems
+TXT-Com-200-1,Introduction to Computer Graphics,Wiley,92.27,653,2,2021,978-204-982-4,Systems
+TXT-Com-300-1,Advanced Natural Language Processing Analysis,McGraw-Hill,67.68,624,2,2018,978-450-190-6,Systems
+TXT-Com-300-1,Advanced Algorithms Analysis,Springer,64.27,736,3,2020,978-738-451-9,Theory
+TXT-Com-400-1,Advanced Special Topics in Database Systems,McGraw-Hill,67.07,849,3,2018,978-397-570-9,Systems
+TXT-Com-400-1,Advanced Special Topics in IoT Development,Pearson,105.39,869,4,2021,978-932-736-0,Systems
+TXT-Com-400-2,Special Topics in IoT Development: Theory and Practice,Wiley,54.32,784,3,2017,978-119-710-1,Systems
+TXT-Com-400-3,Special Topics in IoT Development: A Comprehensive Guide,Pearson,61.18,762,2,2021,978-369-551-4,Systems
+TXT-Com-400-1,Advanced Special Topics in DevOps,Pearson,70.17,1185,2,2019,978-034-991-3,Systems
+TXT-Com-200-1,Introduction to Algorithms,MIT Press,134.84,590,2,2021,978-339-199-4,Theory
+TXT-Com-300-1,Advanced Algorithms Analysis,MIT Press,95.7,376,1,2017,978-384-045-7,Theory
+TXT-Com-300-2,Algorithms Analysis: Principles and Applications,MIT Press,65.2,268,3,2022,978-991-781-5,Theory
+TXT-Com-200-1,Introduction to Operating Systems,Wiley,103.99,540,3,2019,978-198-327-5,Systems
+TXT-Com-200-2,Operating Systems: Case Studies,Wiley,50.72,902,2,2022,978-347-778-3,Systems
+TXT-Com-200-3,Operating Systems: Problem Solving,Wiley,103.72,969,1,2019,978-622-890-9,Systems
+TXT-Com-400-1,Advanced Advanced Operating Systems,Wiley,80.99,796,2,2017,978-529-912-9,Systems
+TXT-Com-300-1,Advanced Algorithms Analysis,MIT Press,144.36,784,3,2021,978-221-629-3,Theory
+TXT-Com-200-1,Introduction to Mobile Computing,McGraw-Hill,58.22,830,1,2023,978-856-459-2,Systems
+TXT-Com-300-1,Advanced Cybersecurity Applications,Pearson,70.9,702,2,2017,978-721-584-8,Systems
+TXT-Com-200-1,Introduction to Cloud Computing,Pearson,84.13,1009,1,2021,978-930-781-5,Systems
+TXT-Com-200-1,Introduction to IoT Development,Pearson,111.16,761,4,2021,978-622-112-2,Systems
+TXT-Com-100-1,Introduction to Fundamentals of IoT Development,Wiley,127.8,487,4,2022,978-281-768-5,Systems
+TXT-Com-200-1,Introduction to Web Development,McGraw-Hill,59.36,963,5,2021,978-895-061-9,Systems
+TXT-Bio-100-1,Introduction to Introduction to Bioinformatics,Cengage,166.79,775,5,2023,978-956-455-7,General
+TXT-Bio-300-1,Advanced Behavioral Ecology I,Oxford University Press,101.64,817,2,2022,978-986-056-0,Specialized
+TXT-Bio-300-2,Behavioral Ecology I: Case Studies,Elsevier,107.55,707,2,2018,978-001-622-0,Specialized
+TXT-Bio-300-3,Behavioral Ecology I: A Comprehensive Guide,Oxford University Press,73.48,759,3,2017,978-884-358-7,Specialized
+TXT-Bio-400-1,Advanced Topics in General Biology,Springer,162.47,715,1,2021,978-860-193-2,Specialized
+TXT-Bio-200-1,Introduction to Systems Biology,Pearson,137.54,698,4,2019,978-234-586-9,General
+TXT-Bio-200-2,Systems Biology: Theory and Practice,Wiley,162.87,674,2,2021,978-609-741-7,General
+TXT-Bio-100-1,Introduction to Principles of Ecology,Wiley,149.84,1048,2,2023,978-027-357-5,General
+TXT-Bio-100-2,Principles of Ecology: Problem Solving,Pearson,122.3,638,1,2023,978-985-861-4,General
+TXT-Bio-100-3,Principles of Ecology: Case Studies,Pearson,172.12,1070,3,2022,978-246-384-2,General
+TXT-Bio-300-1,Advanced Animal Behavior Applications,Oxford University Press,152.79,660,3,2020,978-868-280-6,Specialized
+TXT-Bio-300-2,Animal Behavior Applications: Problem Solving,Springer,80.99,856,3,2023,978-381-330-4,Specialized
+TXT-Bio-300-3,Animal Behavior Applications: A Comprehensive Guide,Oxford University Press,79.18,878,5,2017,978-335-305-4,Specialized
+TXT-Bio-200-1,Introduction to Cell Biology,Wiley,88.44,977,3,2023,978-875-387-1,General
+TXT-Bio-200-2,Cell Biology: A Comprehensive Guide,McGraw-Hill,117.26,1070,2,2021,978-040-441-7,General
+TXT-Bio-200-1,Introduction to Developmental Biology,McGraw-Hill,168.53,902,1,2021,978-548-740-0,General
+TXT-Bio-200-2,Developmental Biology: Theory and Practice,Pearson,85.18,636,4,2018,978-442-900-8,General
+TXT-Bio-200-1,Introduction to Behavioral Ecology,Cengage,134.38,1295,3,2022,978-276-353-6,General
+TXT-Bio-300-1,Advanced Molecular Biology I,Springer,146.56,734,2,2018,978-090-513-0,Specialized
+TXT-Bio-300-1,Advanced Biotechnology Methods,Oxford University Press,113.98,715,1,2018,978-402-577-2,Specialized
+TXT-Bio-300-1,Advanced Plant Biology Theory,Oxford University Press,147.96,716,3,2019,978-522-923-2,Specialized
+TXT-Bio-300-2,Plant Biology Theory: A Comprehensive Guide,Elsevier,169.2,692,1,2021,978-085-207-1,Specialized
+TXT-Bio-200-1,Introduction to Metabolomics,Cengage,124.44,1112,1,2021,978-487-522-9,General
+TXT-Bio-200-2,Metabolomics: Theory and Practice,Cengage,111.3,1199,3,2022,978-614-960-3,General
+TXT-Bio-200-3,Metabolomics: Principles and Applications,Pearson,141.83,809,5,2018,978-391-653-4,General
+TXT-Bio-300-1,Advanced Synthetic Biology I,Elsevier,149.16,671,2,2019,978-322-100-8,Specialized
+TXT-Bio-300-2,Synthetic Biology I: Case Studies,Elsevier,116.55,709,5,2020,978-957-974-9,Specialized
+TXT-Bio-300-3,Synthetic Biology I: Principles and Applications,Elsevier,162.88,940,1,2023,978-352-049-7,Specialized
+TXT-Bio-200-1,Introduction to Stem Cell Biology,Cengage,177.27,1099,3,2023,978-208-879-7,General
+TXT-Bio-200-2,Stem Cell Biology: Problem Solving,McGraw-Hill,91.35,1370,4,2019,978-833-655-1,General
+TXT-Bio-200-3,Stem Cell Biology: A Comprehensive Guide,Pearson,118.68,1448,1,2019,978-028-625-1,General
+TXT-Bio-300-1,Advanced Behavioral Ecology Analysis,Elsevier,174.4,1028,4,2023,978-171-192-6,Specialized
+TXT-Bio-200-1,Introduction to Stem Cell Biology,Pearson,94.84,1540,5,2018,978-793-217-9,General
+TXT-Bio-200-2,Stem Cell Biology: Problem Solving,Cengage,143.39,1106,1,2022,978-330-319-1,General
+TXT-Bio-200-1,Introduction to Cell Physiology,Cengage,102.62,866,5,2021,978-052-396-5,General
+TXT-Bio-400-1,Advanced Special Topics in Developmental Biology,Springer,99.42,713,5,2022,978-102-038-5,Specialized
+TXT-Bio-300-1,Advanced Environmental Biology Theory,Elsevier,132.36,833,5,2022,978-163-474-4,Specialized
+TXT-Bio-300-2,Environmental Biology Theory: Principles and Applications,Oxford University Press,99.44,708,2,2020,978-260-594-7,Specialized
+TXT-Bio-300-1,Advanced Animal Behavior Analysis,Elsevier,101.89,533,1,2023,978-035-216-8,Specialized
+TXT-Bio-300-2,Animal Behavior Analysis: Problem Solving,Oxford University Press,75.02,948,2,2021,978-602-841-8,Specialized
+TXT-Bio-200-1,Introduction to Animal Behavior,McGraw-Hill,111.14,757,4,2020,978-148-885-0,General
+TXT-Bio-200-2,Animal Behavior: Theory and Practice,Cengage,117.73,971,2,2022,978-070-831-9,General
+TXT-Bio-200-1,Introduction to Biotechnology,Pearson,180.25,1071,5,2019,978-359-648-8,General
+TXT-Bio-300-1,Advanced Cell Physiology Theory,Elsevier,96.62,741,1,2019,978-533-183-2,Specialized
+TXT-Bio-300-2,Cell Physiology Theory: Problem Solving,Elsevier,115.6,539,3,2019,978-090-627-1,Specialized
+TXT-Bio-300-3,Cell Physiology Theory: Case Studies,Springer,141.37,465,5,2017,978-521-686-9,Specialized
+TXT-Bio-200-1,Introduction to Metabolomics,McGraw-Hill,112.42,912,4,2023,978-322-996-1,General
+TXT-Bio-200-2,Metabolomics: Theory and Practice,McGraw-Hill,124.92,1621,4,2019,978-468-832-8,General
+TXT-Bio-200-1,Introduction to Parasitology,Pearson,183.05,915,5,2021,978-120-013-9,General
+TXT-Bio-200-1,Introduction to Tropical Biology,Cengage,164.44,1365,2,2022,978-142-131-0,General
+TXT-Bio-400-1,Advanced Topics in Population Genetics,Oxford University Press,162.55,370,5,2022,978-410-227-7,Specialized
+TXT-Bio-400-2,Topics in Population Genetics: Theory and Practice,Oxford University Press,74.52,857,2,2019,978-853-971-4,Specialized
+TXT-Bio-200-1,Introduction to Developmental Biology,McGraw-Hill,94.47,700,5,2019,978-399-470-1,General
+TXT-Bio-100-1,Introduction to Basic Molecular Genetics,Cengage,88.78,827,1,2021,978-897-230-4,General
+TXT-Bio-100-1,Introduction to Fundamentals of Parasitology,Pearson,80.13,998,5,2020,978-137-091-9,General
+TXT-Bio-300-1,Advanced Biochemistry Theory,Elsevier,133.91,606,3,2023,978-921-168-0,Specialized
+TXT-Bio-100-1,Introduction to Principles of Biotechnology,Cengage,180.92,997,3,2023,978-943-667-5,General
+TXT-Bio-100-2,Principles of Biotechnology: Case Studies,McGraw-Hill,148.46,894,2,2019,978-734-294-5,General
+TXT-Bio-100-1,Introduction to Principles of Animal Behavior,McGraw-Hill,125.81,1409,3,2019,978-895-092-4,General
+TXT-Bio-300-1,Advanced Developmental Biology Methods,Springer,101.86,902,3,2018,978-187-444-2,Specialized
+TXT-Bio-300-2,Developmental Biology Methods: Problem Solving,Springer,170.08,755,3,2021,978-300-519-6,Specialized
+TXT-Bio-100-1,Introduction to Introduction to Synthetic Biology,Pearson,199.4,1161,5,2023,978-407-863-6,General
+TXT-Bio-300-1,Advanced Molecular Genetics I,Elsevier,122.02,860,1,2017,978-691-816-6,Specialized
+TXT-Bio-300-2,Molecular Genetics I: Principles and Applications,Springer,137.21,528,3,2022,978-509-179-6,Specialized
+TXT-Bio-300-3,Molecular Genetics I: Principles and Applications,Elsevier,120.21,710,4,2020,978-489-586-6,Specialized
+TXT-Bio-400-1,Advanced Special Topics in Animal Behavior,Elsevier,109.17,905,5,2016,978-002-556-0,Specialized
+TXT-Bio-400-2,Special Topics in Animal Behavior: Principles and Applications,Springer,102.8,724,4,2021,978-318-672-4,Specialized
+TXT-Bio-400-3,Special Topics in Animal Behavior: Problem Solving,Elsevier,155.13,555,1,2017,978-646-858-3,Specialized
+TXT-Bio-200-1,Introduction to Computational Biology,McGraw-Hill,173.92,1259,3,2021,978-160-425-6,General
+TXT-Bio-200-2,Computational Biology: Case Studies,McGraw-Hill,94.67,556,5,2021,978-404-249-4,General
+TXT-Bio-200-3,Computational Biology: Principles and Applications,Wiley,80.65,738,1,2020,978-058-242-9,General
+TXT-Bio-200-1,Introduction to Proteomics,Cengage,153.95,875,2,2021,978-576-309-3,General
+TXT-Bio-100-1,Introduction to Fundamentals of Environmental Biology,McGraw-Hill,185.49,773,2,2022,978-218-661-2,General
+TXT-Bio-100-1,Introduction to Fundamentals of Tropical Biology,McGraw-Hill,146.96,1306,3,2021,978-874-798-8,General
+TXT-Bio-100-2,Fundamentals of Tropical Biology: Principles and Applications,Pearson,111.36,1012,2,2019,978-286-739-9,General
+TXT-Bio-400-1,Advanced Topics in Biochemistry,Elsevier,156.17,906,1,2022,978-321-727-9,Specialized
+TXT-Bio-400-2,Topics in Biochemistry: Problem Solving,Elsevier,80.88,841,4,2017,978-965-077-4,Specialized
+TXT-Bio-300-1,Advanced Molecular Genetics Theory,Springer,115.44,561,5,2021,978-330-048-7,Specialized
+TXT-Bio-300-2,Molecular Genetics Theory: Problem Solving,Oxford University Press,100.92,1037,2,2018,978-883-670-3,Specialized
+TXT-Bio-300-3,Molecular Genetics Theory: Case Studies,Springer,126.43,781,3,2020,978-709-085-1,Specialized
+TXT-Bio-100-1,Introduction to Introduction to Stem Cell Biology,Wiley,108.1,1069,2,2019,978-049-900-2,General
+TXT-Bio-300-1,Advanced Virology Methods,Springer,92.32,708,3,2020,978-465-362-9,Specialized
+TXT-Bio-300-2,Virology Methods: Problem Solving,Springer,171.27,926,3,2023,978-458-948-1,Specialized
+TXT-Bio-300-3,Virology Methods: Problem Solving,Elsevier,105.19,657,1,2019,978-720-804-0,Specialized
+TXT-Bio-300-1,Advanced Behavioral Ecology Theory,Springer,118.22,802,5,2020,978-456-694-1,Specialized
+TXT-Bio-300-2,Behavioral Ecology Theory: Principles and Applications,Springer,113.3,727,2,2020,978-651-428-5,Specialized
+TXT-Bio-300-3,Behavioral Ecology Theory: Theory and Practice,Springer,99.06,939,1,2018,978-683-415-9,Specialized
+TXT-Bio-100-1,Introduction to Fundamentals of Genomics,Cengage,175.32,939,2,2022,978-288-171-1,General
+TXT-Bio-300-1,Advanced Molecular Genetics Analysis,Springer,136.53,785,1,2020,978-156-273-5,Specialized
+TXT-Bio-400-1,Advanced Special Topics in Microbiology,Elsevier,144.31,1032,4,2021,978-223-813-2,Specialized
+TXT-Bio-400-2,Special Topics in Microbiology: Theory and Practice,Springer,132.66,496,1,2019,978-828-955-4,Specialized
