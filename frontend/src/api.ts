@@ -50,3 +50,11 @@ export async function fetchStudyBuddies(id: string) {
     }
     return res.json() as Promise<{ buddies: any[] }>;
 }
+
+export async function fetchForecasts(id: string){
+    const res = await fetch(`/api/get_forecasts/${id}`);
+    if(!res.ok){
+        throw new Error('Failed to fetch forecast data');
+    }
+    return res.json() as Promise<{ buddies: any[]}>;
+}

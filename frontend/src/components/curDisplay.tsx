@@ -3,7 +3,7 @@
 // Import for FC
 import React from "react";
 // Imports for different displays/elements
-import UnibudChat from "./unibud";
+import UnibudChat from "./Unibud";
 import StudyBuddies from "./StudyBuddies";
 
 type Props = { selection: string };
