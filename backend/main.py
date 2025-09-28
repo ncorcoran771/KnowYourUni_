@@ -10,7 +10,7 @@ from utils import to_plain, normalize_suggestion  # helper function to convert n
 from pydantic import BaseModel
 from typing import Optional, List, Any, Dict, Tuple, Union
 from fdev import student_metrics #metric functions
-import unibud
+import unibud as ubud
 
 # Pydantic Classes
 class ValidateOut(BaseModel):  # Validating user IDs
@@ -95,9 +95,10 @@ def get_graph(id: str, id2: int) -> dict:
     return qu.fetch_graph(id, id2)
 
 # Post endpoint for unibud llm (gemini)
-@app.post("/api/unibud")
+@app.post("/api/unibud/ask")
 def unibud(req: AskReq):
-    return {JSONResponse(unibud.ask(req.query))}
+    answer = ubud.ask(req.query)
+    return {"text": answer}
 
 ''' Random helper functions, feel free to ignore '''
 

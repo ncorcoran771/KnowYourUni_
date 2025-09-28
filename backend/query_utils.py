@@ -1,10 +1,16 @@
 ''' Tons of utility functions for querying the neo4j backend '''
 
-from neo4j import GraphDatabase, basic_auth
+import math
+from time import time
+from datetime import datetime, date, time
+from typing import List
+
+from neo4j import GraphDatabase, basic_auth, Driver
 from neo4j.exceptions import Neo4jError
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+from utils import to_plain
 
 def load_dotenv_automatically():
     ''' Automatically load .env file from the same directory as this script '''
@@ -41,24 +47,35 @@ def validate_student_id(student_id: str) -> bool:
     
 # --------- Fetching data for a specific student ---------
 def fetch_student_data(student_id: str) -> dict:
-    ''' Fetch all nodes and relationships for a specific student '''
+    """Fetch all nodes and relationships connected to a specific student (JSON-ready)."""
+    cypher = """
+    MATCH (s:Student {id: $student_id})
+    OPTIONAL MATCH (s)-[r]-(n)
+    WITH s, collect(DISTINCT n) AS ns, collect(DISTINCT r) AS rs
+    RETURN
+      { id: elementId(s), labels: labels(s), props: properties(s) } AS student,
+      [n IN ns | { id: elementId(n), labels: labels(n), props: properties(n) }] AS nodes,
+      [rel IN rs | {
+        id: elementId(rel),
+        type: type(rel),
+        start: elementId(startNode(rel)),
+        end: elementId(endNode(rel)),
+        props: properties(rel)
+      }] AS relationships
+    """
     with driver.session() as session:
-        result = session.run(
-            """
-            MATCH (s:Student {id: $student_id})-[r]-(n)
-            RETURN s, collect(r) AS relationships, collect(n) AS nodes
-            """,
-            student_id=student_id
-        )
-        record = result.single()
-        if record:
-            nodes = [record["s"]] + record["nodes"]
-            relationships = record["relationships"]
-            return {
-                "nodes": [dict(node) for node in nodes],
-                "relationships": [dict(rel) for rel in relationships]
-            }
-        return {"nodes": [], "relationships": []}
+        rec = session.run(cypher, student_id=student_id).single()
+        if not rec:
+            # student not found
+            return {"student": None, "nodes": [], "relationships": []}
+        data = rec.data()
+        # put the student in the nodes list too, if you prefer that shape:
+        return {
+            "student": data["student"],
+            "nodes": [data["student"], *data["nodes"]],
+            "relationships": data["relationships"],
+        }
+
     
 
 # --------- Fetching all relationships in the knowledge graph ---------
@@ -138,24 +155,133 @@ def fetch_graph(relation: str, max: int) -> dict:
         return list(nodes_map.values()), edges;
 
 
-# --------- Fetching all data in the knowledge graph ---------
-def fetch_full_kg_data() -> dict:
-    ''' Fetch all nodes and relationships in the knowledge graph '''
+# --------- Fetching all data in the knowledge graph - Crazy checking since it is needed for LLM ---------
+def _jsonify_value(v: any) -> any:
+    """Best-effort conversion of Neo4j values to JSON-safe types."""
+    # None / primitives
+    if v is None or isinstance(v, (str, int, float, bool)):
+        # guard for NaN/Infinity which are not valid in JSON
+        if isinstance(v, float) and (math.isnan(v) or math.isinf(v)):
+            return None
+        return v
+
+    # datetimes
+    if isinstance(v, (datetime, date, time)):
+        # ISO 8601 strings are safe
+        try:
+            return v.isoformat()
+        except Exception:
+            return str(v)
+
+    # bytes-like
+    if isinstance(v, (bytes, bytearray, memoryview)):
+        return v.decode("utf-8", errors="replace")
+
+    # spatial
+    if Neo4jPoint is not None and isinstance(v, Neo4jPoint):  # type: ignore
+        # include both Cartesian and WGS-84 friendly fields, when present
+        out = {"srid": v.srid}
+        if hasattr(v, "x"): out["x"] = v.x
+        if hasattr(v, "y"): out["y"] = v.y
+        if hasattr(v, "z"): 
+            try:
+                out["z"] = v.z
+            except Exception:
+                pass
+        # WGS-84 helpers (lat/lon) if available
+        if hasattr(v, "latitude"): out["latitude"] = v.latitude
+        if hasattr(v, "longitude"): out["longitude"] = v.longitude
+        return out
+
+    # lists / tuples / sets
+    if isinstance(v, (list, tuple, set)):
+        return [_jsonify_value(x) for x in v]
+
+    # dict-like
+    if isinstance(v, dict):
+        return {str(k): _jsonify_value(val) for k, val in v.items()}
+
+    # fallback
+    return str(v)
+
+def _jsonify_props(props: dict[str, any]) -> dict[str, any]:
+    return {str(k): _jsonify_value(v) for k, v in props.items()}
+
+# --- Main mover ----
+def fetch_full_kg_data(n_limit: int | None = None, r_limit: int | None = None) -> dict:
+    """
+    Fetch the whole graph as plain JSON-friendly dicts.
+
+    - Uses elementId(...) everywhere (no deprecation warnings).
+    - Works on an empty DB (always returns a single row).
+    - Optionally caps returned nodes/relationships via n_limit/r_limit (safe for big graphs).
+    """
+    cypher = """
+    // Collect all nodes (OPTIONAL MATCH ensures one row even if graph is empty)
+    OPTIONAL MATCH (n)
+    WITH collect(DISTINCT n) AS ns
+
+    // Optionally trim node set to limit payload size
+    WITH (CASE WHEN $n_limit IS NULL THEN ns ELSE ns[0..toInteger($n_limit)] END) AS ns
+
+    // Collect rels only among those nodes
+    OPTIONAL MATCH (a)-[r]->(b)
+    WHERE a IN ns AND b IN ns
+    WITH ns, collect(DISTINCT r) AS rs
+
+    // Optionally trim relationships
+    WITH ns, (CASE WHEN $r_limit IS NULL THEN rs ELSE rs[0..toInteger($r_limit)] END) AS rs
+
+    RETURN
+      [x IN ns | { 
+        id: elementId(x), 
+        labels: labels(x), 
+        props: properties(x) 
+      }] AS nodes,
+      [x IN rs | { 
+        id: elementId(x), 
+        type: type(x), 
+        start: elementId(startNode(x)), 
+        end: elementId(endNode(x)),
+        props: properties(x)
+      }] AS relationships
+    """
+
     with driver.session() as session:
-        result = session.run(
-            """
-            MATCH (n)-[r]-(m)
-            RETURN collect(DISTINCT n) AS nodes, collect(DISTINCT r) AS relationships
-            """
-        )
-        record = result.single()
-        if record:
-            nodes = record["nodes"]
-            relationships = record["relationships"]
-            return {
-                "nodes": [dict(node) for node in nodes],
-                "relationships": [dict(rel) for rel in relationships]
+        rec = session.run(
+            cypher,
+            n_limit=n_limit,
+            r_limit=r_limit,
+        ).single()
+
+        # Safety: rec can technically be None if the query changes or fails silently
+        if not rec:
+            return {"nodes": [], "relationships": []}
+
+        # JSON-safe post-processing for property maps (handles points/bytes/datetimes/etc.)
+        raw_nodes: List[dict[str, any]] = rec["nodes"] or []
+        raw_rels:  List[dict[str, any]] = rec["relationships"] or []
+
+        nodes = [
+            {
+                "id": n.get("id"),
+                "labels": list(n.get("labels") or []),
+                "props": _jsonify_props(n.get("props") or {}),
             }
-        return {"nodes": [], "relationships": []}
+            for n in raw_nodes
+        ]
+
+        relationships = [
+            {
+                "id": r.get("id"),
+                "type": r.get("type"),
+                "start": r.get("start"),
+                "end": r.get("end"),
+                "props": _jsonify_props(r.get("props") or {}),
+            }
+            for r in raw_rels
+        ]
+
+        return {"nodes": nodes, "relationships": relationships}
     
 
