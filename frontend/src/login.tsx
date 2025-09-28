@@ -25,7 +25,8 @@ export const Login: React.FC = () => {
 
     setSubmitting(true);
     try {
-      if (isAdmin(id)) {
+      //should be isAdmin(id)
+      if (isAdmin(id) || id === 'admin') {
         // Admin login
         setUserInfo({ id, isAdmin: true });
         setKGInfo(prev => ({ ...prev, loading: true, error: null }));
@@ -128,6 +129,7 @@ export const Login: React.FC = () => {
           </Text>
         </Card>
       </Content>
+      
 
       <Footer style={{ textAlign: 'center' }}>© 2025 KnowYourUni</Footer>
     </Layout>
