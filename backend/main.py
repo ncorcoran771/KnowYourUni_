@@ -52,8 +52,8 @@ def get_all_data() -> dict:
 
 # Return nodes in a specified relation
 @app.get("/api/kg/graph")
-def get_graph(id: str) -> dict:
-    return qu.fetch_graph(id)
+def get_graph(id: str, id2: int) -> dict:
+    return qu.fetch_graph(id, id2)
 
 ''' TODO (endpoints/connections)
 - LLM requests + responses

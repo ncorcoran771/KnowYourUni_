@@ -7,12 +7,14 @@ import { isAdmin } from './context/verify-admin';
 import { fetchKGDataById, fetchFullKGData } from './api';
 import { useUserInfo } from './context/UserInfoProvider';
 import { useKGInfo } from './context/KGInfoProvider';
+import GraphSelector from './components/graphSelector';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
 
 /* Functional component for the login page */
 export const Login: React.FC = () => {
+  // add in a graph selector here for admin to view different relationship types
   const navigate = useNavigate();
   const { setUserInfo } = useUserInfo();
   const { setKGInfo } = useKGInfo();
@@ -95,6 +97,7 @@ export const Login: React.FC = () => {
           <Text type="secondary" style={{ display: 'block', marginBottom: 16 }}>
             Enter your ID to continue.
           </Text>
+          <GraphSelector />;
 
           <Form layout="vertical" onFinish={onFinish} autoComplete="off" requiredMark={false}>
             <Form.Item

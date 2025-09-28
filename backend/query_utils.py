@@ -68,25 +68,48 @@ def fetch_all_relations() -> dict:
         return [record["relationships"] for record in result]
     
 # --------- Fetch nodes in a specified relation to display later ---------
-def fetch_graph(relation: str) -> dict:
+def fetch_graph(relation: str, max: int) -> dict:
     ''' Fetch nodes and relationshios of a specified relatyion type'''
     with driver.session() as session:
+        # select maximum number of nodes/relationships to return
         result = session.run(
-            """
-            MATCH (n)-[r]->(m)
-            WHERE TYPE(r) = $relation
-            RETURN collect(DISTINCT n) AS nodes, collect(DISTINCT r) AS relationships
-            """
+            f"""
+            MATCH (n)-[r:{relation}]-(m)
+            RETURN n, r, m
+            LIMIT $max
+            """,
+            max=max
         )
-        record = result.single()
-        if record:
-            nodes = record["nodes"]
-            relationships = record["relationships"]
-            return {
-                "nodes": [dict(node) for node in nodes],
-                "relationships": [dict(rel) for rel in relationships]
+        nodes_map = {}
+        edges = []
+
+        for record in result:
+            n = record["n"]
+            m = record["m"]
+            r = record["r"]
+
+        #add nodes
+        for node in [n, m]:
+                if node.id not in nodes_map:
+                    nodes_map[node.id] = {
+                        "data": {
+                            "id": str(node.id),
+                            "label": node.get("name", f"Node-{node.id}")
+                        }
+                    }
+        #add edges
+        edges.append(
+            {
+                "data": {
+                    "source": str(n.id),
+                    "target": str(m.id),
+                    "label": type(r).__name__
+                }
             }
-        return {"nodes": [], "relationships": []}
+        )
+
+        return list(nodes_map.values()), edges;
+
 
 # --------- Fetching all data in the knowledge graph ---------
 def fetch_full_kg_data() -> dict:
