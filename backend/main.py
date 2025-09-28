@@ -3,6 +3,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import query_utils as qu  # Neo4j query utils
+
+from fdev import student_metrics #metric functions
+
 # TODO Import all helper modules/functions here
 
 # Initializng the connection
@@ -24,6 +27,12 @@ def health():
 @app.get("/api/validate/${id}")
 def validate_id(id: str) -> bool:
     v: bool = qu.validate_student_id(id)
+    return {"ok": v}
+
+# study buddy metric
+@app.get("/api/validate/${id}")
+def get_study_buddies(id: str) -> bool:
+    v: bool = student_metrics.study_buddy_finder(id)
     return {"ok": v}
 
 # Return all nodes/data for a specific user
