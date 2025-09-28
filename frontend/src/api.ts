@@ -58,3 +58,19 @@ export async function fetchForecasts(id: string){
     }
     return res.json() as Promise<{ buddies: any[]}>;
 }
+
+export async function fetchStudents(){
+    const res = await fetch(`/api/get_students/`);
+    if(!res.ok){
+        throw new Error('Failed to fetch forecast data');
+    }
+    return res.json() as Promise<{ buddies: any[]}>;
+}
+
+export async function suggestCourses(id: string){
+    const res = await fetch(`/api/suggest_next_semester_classes/${id}`);
+    if(!res.ok){
+        throw new Error('Failed to fetch course suggestion data');
+    }
+    return res.json() as Promise<{ buddies: any[]}>;
+}

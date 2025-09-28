@@ -5,14 +5,19 @@ import React from "react";
 // Imports for different displays/elements
 import UnibudChat from "./Unibud";
 import StudyBuddies from "./StudyBuddies";
+import ForecastData from "./ForecastData";
+import StudentData from "./StudentData";
+import CourseSuggestion from "./CourseSuggestion";
 
 type Props = { selection: string };
 
 const CurDisplay: React.FC<Props> = ({ selection }) => {
   const views: Record<string, React.ReactNode> = {
-    overview: <div>📊 Overview content here</div>,
+    studentData: <StudentData />,
+    courseSuggestion: <CourseSuggestion />,
     studyBuddies: <StudyBuddies />,
-    unibud: <UnibudChat />
+    unibud: <UnibudChat />,
+    gpaForecast: <ForecastData />
     // Add more mappings as needed
 };
 

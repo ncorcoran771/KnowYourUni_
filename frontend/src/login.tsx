@@ -1,7 +1,7 @@
 /* Login component logic */
 
 import React, { useState } from 'react';
-import { Layout, Button, Form, Input, Typography, Card, message, theme } from 'antd';
+import { Layout, Button, Form, Input, Typography, message, theme } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { isAdmin } from './utils/verifyAdmin';
 import { fetchKGDataById, fetchFullKGData } from './api';
@@ -9,19 +9,19 @@ import { useUserInfo } from './context/UserInfoProvider';
 import { useKGInfo } from './context/KGInfoProvider';
 import { SVGLogo } from './utils/getSVGLogo';
 import ThemeController from './components/ThemeController';
-import GraphSelector from './components/graphSelector';
+import GraphCanvas from './components/graphSelector'; // <-- full-bleed graph component
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
 
 /* Functional component for the login page */
 export const Login: React.FC = () => {
-  // add in a graph selector here for admin to view different relationship types
   const navigate = useNavigate();
   const { setUserInfo } = useUserInfo();
   const { setKGInfo } = useKGInfo();
-
   const [submitting, setSubmitting] = useState(false);
+
+  const { token } = theme.useToken(); // use AntD theme tokens for colors
 
   const onFinish = async (values: { id: string }) => {
     const id = values.id?.trim();
@@ -34,7 +34,7 @@ export const Login: React.FC = () => {
         setUserInfo({ id, isAdmin: true });
         setKGInfo(prev => ({ ...prev, loading: true, error: null }));
 
-        const data = await fetchFullKGData().catch();
+        const data = await fetchFullKGData();
         setKGInfo({
           nodes: data.nodes ?? [],
           relationships: data.relationships ?? [],
@@ -65,12 +65,7 @@ export const Login: React.FC = () => {
       }
     } catch (err: unknown) {
       console.error(err);
-      if (err instanceof Error) {
-        message.error(err.message || 'Unexpected error. Please try again.');
-      } else {
-        message.error('Unexpected error. Please try again.');
-      }
-      // ensure loading false on error as well
+      message.error(err instanceof Error ? err.message : 'Unexpected error. Please try again.');
       setKGInfo(prev => ({ ...prev, loading: false }));
     } finally {
       setSubmitting(false);
@@ -85,66 +80,80 @@ export const Login: React.FC = () => {
           alignItems: "center",
           justifyContent: "space-between",
           paddingInline: 16,
-          background: theme.useToken().token.colorPrimary,
+          background: token.colorPrimary,
         }}
       >
         <SVGLogo />
-        <div style={{ fontWeight: 800 }}>Know Your Uni</div>
+        <div style={{ fontWeight: 800, color: token.colorTextLightSolid }}>Know Your Uni</div>
         <ThemeController />
       </Header>
-      <Content
-        style={{
-          margin: '16px',
-          padding: '16px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Card style={{ width: 420, maxWidth: '95%', boxShadow: '0 6px 18px rgba(0,0,0,0.08)' }}>
-          <Title level={3} style={{ marginBottom: 8 }}>
-            Sign in
-          </Title>
-          <Text type="secondary" style={{ display: 'block', marginBottom: 16 }}>
-            Enter your Student ID to continue.
-          </Text>
-          <GraphSelector />;
 
-          <Form layout="vertical" onFinish={onFinish} autoComplete="off" requiredMark={false}>
-            <Form.Item
-              label="Student ID"
-              name="id"
-              rules={[{ required: true, message: 'Please enter your ID' }]}
-            >
-              <Input
-                size="large"
-                placeholder="e.g., A12345"
-                onPressEnter={() => { /* handled by onFinish */ }}
-              />
-            </Form.Item>
+      {/* FULL-WIDTH CONTENT: two-column split */}
+      <Content style={{ margin: 0, padding: 0, background: token.colorBgLayout }}>
+        <div
+          style={{
+            display: 'flex',
+            minHeight: 'calc(100vh - 64px - 70px)', // Header 64px, Footer ~70px
+            background: token.colorBgLayout,
+          }}
+        >
+          {/* LEFT: Graph fills entire left side (no Card/box) */}
+          <div style={{ flex: 1, position: 'relative' }}>
+            <GraphCanvas />
+          </div>
 
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                size="large"
-                block
-                loading={submitting}
-                disabled={submitting}
+          {/* RIGHT: Login panel (fixed width) */}
+          <div
+            style={{
+              width: 420,
+              padding: 24,
+              background: token.colorBgContainer,
+              borderLeft: `1px solid ${token.colorSplit}`,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 12,
+            }}
+          >
+            <Title level={3} style={{ marginBottom: 4 }}>
+              Sign in
+            </Title>
+            <Text type="secondary" style={{ marginBottom: 12 }}>
+              Enter your Student ID to continue.
+            </Text>
+
+            <Form layout="vertical" onFinish={onFinish} autoComplete="off" requiredMark={false}>
+              <Form.Item
+                label="Student ID"
+                name="id"
+                rules={[{ required: true, message: 'Please enter your ID' }]}
               >
-                Continue
-              </Button>
-            </Form.Item>
-          </Form>
+                <Input size="large" placeholder="e.g., A12345" />
+              </Form.Item>
 
-          <Text type="secondary">
-            Admins can sign in with their admin ID to access administrative tools.
-          </Text>
-        </Card>
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  size="large"
+                  block
+                  loading={submitting}
+                  disabled={submitting}
+                >
+                  Continue
+                </Button>
+              </Form.Item>
+            </Form>
+
+            <Text type="secondary">
+              Admins can sign in with their admin ID to access administrative tools.
+            </Text>
+          </div>
+        </div>
       </Content>
-      
 
-      <Footer style={{ textAlign: 'center' }}>HackUMBC '25 - KnowYourUni</Footer>
+      <Footer style={{ textAlign: 'center', background: token.colorBgLayout }}>
+        HackUMBC '25 - KnowYourUni
+      </Footer>
     </Layout>
   );
 };
