@@ -35,6 +35,11 @@ def validate_id(id: str) -> bool:
 def get_study_buddies(id: str) -> bool:
     return to_plain(student_metrics.study_buddy_finder(id))
 
+# suggested next semester core courses and professor
+@app.get("/api/validate/${id}")
+def suggest_next_semester_classes(id: str) -> bool:
+    return to_plain(student_metrics.suggest_next_semester_classes(id, top_k=15))
+
 # Return all nodes/data for a specific user
 @app.get("/api/kg/${id}")
 def get_id_data(id: str) -> dict:
