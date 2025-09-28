@@ -5,14 +5,24 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 import query_utils as qu  # Neo4j query utils
-from utils import to_plain  # helper function to convert neo4j objects to plain python
+from utils import to_plain, normalize_suggestion  # helper function to convert neo4j objects to plain python
 from pydantic import BaseModel
-
+from typing import Optional, List, Any, Dict, Tuple, Union
 from fdev import student_metrics #metric functions
 
 # Pydantic Classes
 class ValidateOut(BaseModel):  # Validating user IDs
     ok: bool
+    
+class SuggestionOut(BaseModel):
+    course_code: str
+    professor: Optional[str] = None
+    confidence: Optional[float] = None
+
+class SuggestionsResponse(BaseModel):
+    student_id: str
+    suggestions: List[SuggestionOut] = []
+
 
 # Initializng the connection
 app = FastAPI(debug=True)
@@ -40,22 +50,22 @@ def validate_id(id: str):
 def get_study_buddies(id: str):
     return JSONResponse(jsonable_encoder(student_metrics.study_buddy_finder(id)))
 
-# suggested next semester core courses and professor
-@app.get("/api/suggest_next_semester_classes/{id}")
+# Suggest next semester classes metric
+@app.get("/api/suggest_next_semester_classes/{id}", response_model=SuggestionsResponse)
 def suggest_next_semester_classes(id: str):
-    raw = JSONResponse(jsonable_encoder(student_metrics.suggest_next_semester_classes(id, top_k=15))),
-    payload = {
+    raw = student_metrics.suggest_next_semester_classes(id, top_k=15) or []
+    items = jsonable_encoder(raw)
+    suggestions: List[Dict[str, Optional[Union[str, float]]]] = []
+    for it in items:
+        norm = normalize_suggestion(it)
+        # guard: require a non-empty course_code
+        if norm["course_code"]:
+            suggestions.append(norm)
+
+    return {
         "student_id": id,
-        "suggestions": [
-            {
-                "course_code": s.get("course_code"),
-                "professor": s.get("professor"),
-                "confidence": float(s["confidence"]) if "confidence" in s else None,
-            }
-            for s in (raw or [])
-        ],
+        "suggestions": suggestions,
     }
-    return JSONResponse(jsonable_encoder(payload))
 
 # Return all nodes/data for a specific user
 @app.get("/api/kg/{id}")

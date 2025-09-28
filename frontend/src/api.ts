@@ -44,7 +44,7 @@ export async function fetchFullKGData(){
 
 /** Fetches the study buddy data */
 export async function fetchStudyBuddies(id: string) {
-    const res = await fetch(`/api/study-buddies/${id}`);
+    const res = await fetch(`/api/get_study_buddies/${id}`);
     if (!res.ok) {
         throw new Error('Failed to fetch study buddies data');
     }
