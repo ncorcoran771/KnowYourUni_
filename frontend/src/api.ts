@@ -41,3 +41,12 @@ export async function fetchFullKGData(){
     }
     return res.json() as Promise<{ nodes: string[], relationships: string[] }>;
 }
+
+/** Fetches the study buddy data */
+export async function fetchStudyBuddies(id: string) {
+    const res = await fetch(`/api/study-buddies/${id}`);
+    if (!res.ok) {
+        throw new Error('Failed to fetch study buddies data');
+    }
+    return res.json() as Promise<{ buddies: any[] }>;
+}

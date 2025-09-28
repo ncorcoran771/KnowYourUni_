@@ -6,7 +6,7 @@ interface DisplayGraphProps {
 }
 // use elements: any if this causes issues
 
-const DisplayGraph: React.FC<DisplayGraphProps> = ({ elements }) => {
+export const DisplayGraph: React.FC<DisplayGraphProps> = ({ elements }) => {
   return (
     <CytoscapeComponent
       elements={elements}

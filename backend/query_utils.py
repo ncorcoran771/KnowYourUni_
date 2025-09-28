@@ -23,6 +23,11 @@ NEO4J_URI = f"neo4j+s://{name}.databases.neo4j.io"
 NEO4J_AUTH = (os.getenv("NEO4J_USER"), os.getenv("NEO4J_PASSWORD"))
 driver = GraphDatabase.driver(NEO4J_URI, auth=NEO4J_AUTH)
 
+# --------- Returning the driver instance ---------
+def get_driver():
+    ''' Return the Neo4j driver instance for the LLM instance '''
+    return driver
+
 # --------- Validating student ID ---------
 def validate_student_id(student_id: str) -> bool:
     ''' Validate if a student ID exists in the database '''

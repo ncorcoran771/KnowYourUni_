@@ -1,6 +1,6 @@
 /* Provider for user information context */
 
-import React, { createContext, useState, ReactNode } from 'react';
+import React, { createContext, useState, type ReactNode } from 'react';
 
 export interface UserInfo {
     id?: string;

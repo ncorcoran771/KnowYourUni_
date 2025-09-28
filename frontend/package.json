@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "antd": "^5.27.4",
+    "cytoscape": "^3.33.1",
     "path": "^0.12.7",
     "react": "^19.1.1",
+    "react-cytoscapejs": "^2.0.0",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.3"
   },

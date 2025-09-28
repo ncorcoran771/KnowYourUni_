@@ -9,3 +9,7 @@ numpy
 pandas
 concurrently
 joblib
+langchain
+langchain-google-genai
+langchain-community
+react-cytoscapejs

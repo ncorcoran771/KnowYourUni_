@@ -4,12 +4,14 @@ import { Layout, Menu, Button, Drawer, Grid, theme } from "antd";
 import { getFeatures } from "../utils/getFeatures";
 import { useUserInfo } from "../context/UserInfoProvider";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import CurDisplay from "./curDisplay";
 
 const { Content, Sider } = Layout;
 const { useBreakpoint } = Grid;
 
 export const DashboardLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [selectedKey, setSelectedKey] = useState<string>("1");
   const { userInfo } = useUserInfo();
   const items = getFeatures(userInfo.isAdmin || false);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -17,19 +19,31 @@ export const DashboardLayout: React.FC = () => {
   const isMobile = !screens.lg;
   const { token } = theme.useToken();
 
+  const onMenuClick = (e: { key: string }) => {
+    setSelectedKey(e.key);
+    if (isMobile) setDrawerOpen(false); // optional: close drawer after select
+  };
+
   const RightPanelContent = (
     <div style={{ padding: 16 }}>
       <Menu
         mode="inline"
         items={items.map((it) => ({
           ...it,
-          icon: React.cloneElement(it.icon as React.ReactElement, { style: { fontSize: 20 } }),
+          icon: React.cloneElement(it.icon as React.ReactElement, {
+            style: { fontSize: 20 },
+          }),
         }))}
-        defaultSelectedKeys={["overview"]}
+        selectedKeys={[selectedKey]}
+        onClick={onMenuClick}
       />
       <div style={{ marginTop: 16 }}>
-        <p style={{ marginBottom: 8, color: token.colorTextSecondary }}>Quick Filters</p>
-        <Button block type="primary">Apply</Button>
+        <p style={{ marginBottom: 8, color: token.colorTextSecondary }}>
+          Quick Filters
+        </p>
+        <Button block type="primary">
+          Apply
+        </Button>
       </div>
     </div>
   );
@@ -58,7 +72,9 @@ export const DashboardLayout: React.FC = () => {
                 placeItems: "center",
               }}
             >
-              <div style={{ opacity: 0.75 }}>Central Graphic Area</div>
+              <div style={{ opacity: 0.75 }}>
+                <CurDisplay selection={selectedKey} />
+              </div>
             </div>
           </Content>
 
@@ -100,16 +116,30 @@ export const DashboardLayout: React.FC = () => {
                   items={items.map((it) => ({
                     ...it,
                     label: collapsed ? undefined : it.label,
-                    icon: React.cloneElement(it.icon as React.ReactElement, { style: { fontSize: 20 } }),
+                    icon: React.cloneElement(it.icon as React.ReactElement, {
+                      style: { fontSize: 20 },
+                    }),
                   }))}
-                  defaultSelectedKeys={["overview"]}
+                  selectedKeys={[selectedKey]}
+                  onClick={onMenuClick}
                 />
               </div>
 
               {!collapsed && (
-                <div style={{ padding: 16, borderTop: `1px solid ${token.colorBorderSecondary}` }}>
-                  <p style={{ marginBottom: 8, color: token.colorTextSecondary }}>Quick Filters</p>
-                  <Button block type="primary">Apply</Button>
+                <div
+                  style={{
+                    padding: 16,
+                    borderTop: `1px solid ${token.colorBorderSecondary}`,
+                  }}
+                >
+                  <p
+                    style={{ marginBottom: 8, color: token.colorTextSecondary }}
+                  >
+                    Quick Filters
+                  </p>
+                  <Button block type="primary">
+                    Apply
+                  </Button>
                 </div>
               )}
 
