@@ -411,3 +411,300 @@ def suggest_next_semester_classes(
     }
     
     return json.dumps(payload, indent=2)
+
+
+# We'll provide a demo that the user can run with their actual CSV.
+# This cell creates a small synthetic dataset to demonstrate the visualization
+# and defines a reusable function `plot_avg_grades_by_department_and_term` that
+# works with a real completed_courses.csv at data_dir.
+import pandas as pd
+import numpy as np
+import re
+import os
+import matplotlib.pyplot as plt
+from datetime import datetime, timezone
+import warnings
+import json
+from sklearn.linear_model import LinearRegression
+
+def clean_nan_columns(a: np.ndarray) -> np.ndarray:
+    a = np.asarray(a, float).copy()
+    m = np.nanmean(a, axis=0)
+    i = np.isnan(a)
+    a[i] = m[np.nonzero(i)[1]]
+    return a
+
+def makepreds(vals):
+
+    #need to hand clean data first
+    data = vals.T.values
+
+    data = clean_nan_columns(data)
+
+    num_depts = data.shape[1]
+    f_cnt = 3
+    feats = np.zeros((data.shape[0], f_cnt), dtype=np.float32)
+    ytrue = np.zeros((data.shape[0]), dtype=np.float32)
+    preds = []
+
+    for d in range(num_depts):
+
+        for n in range(f_cnt):
+            for m in range(f_cnt,data.shape[0]):
+                #print(f"OPERATION: ln ( {data[m, n]} / {data[m-n, n]} )")
+                #print(f"OPERATION: m= {m}, n={n}")
+                feats[m, n] = np.log(data[m, d]/data[m-n-1, d])
+
+        for m in range(data.shape[0]-1):
+            ytrue[m] = np.log(data[m+1, d]/data[m, d])
+
+        X = feats[f_cnt:-1]
+        y = ytrue[f_cnt:-1]
+
+        lr = LinearRegression().fit(X, y)
+        pred = lr.predict(feats[-1:,:])
+
+        #logical fail safe! not for the long term, only for
+        #short term product assurance, and not Logan Kelsch
+        #can validate this only appeared once but visually
+        #destroys the hook of this ML!!!!! ask Logan about it!
+        loc_mean = np.mean(data[:,d])
+        min_range = min(data[-1,d], loc_mean)
+        max_range = max(data[-1,d], loc_mean)
+        if(pred < min_range-0.5 or pred > max_range+0.5):
+            pred = loc_mean
+
+        #append and get out of here goodness 5:53am
+        preds.append(np.exp(pred)*data[-1:,d])
+
+    return np.array(preds)
+
+
+# ---------- Helpers ----------
+GRADE_RANK = {
+    "A+": 4.33, "A": 4, "A-": 3.67,
+    "B+": 3.33,  "B": 3,  "B-": 2.67,
+    "C+": 2.33,  "C": 2,  "C-": 1.67,
+    "D+": 1.33,  "D": 1,  "D-": 0.67,
+    "F": 0
+}
+
+TERM_ORDER = {"Winter": 0, "Spring": 1, "Summer": 2, "Fall": 3}
+TERMS_SEQ   = ["Winter", "Spring", "Summer", "Fall"]  # for next-term inference
+warnings.filterwarnings("ignore")
+
+
+def _term_sort_key(term: str):
+    """
+    Convert a term string like 'Spring2024' into a tuple for sorting: (year, season_order).
+    If parsing fails, put it at the end, preserving input order via 9999.
+    """
+    if not isinstance(term, str):
+        return (9999, 9)
+    m = re.match(r"([A-Za-z]+)\s*([0-9]{4})", term) or re.match(r"([A-Za-z]+)([0-9]{4})", term)
+    if not m:
+        return (9999, 9)
+    season, year = m.group(1), int(m.group(2))
+    season_key = TERM_ORDER.get(season.capitalize(), 9)
+    return (year, season_key)
+
+def _parse_term(term: str):
+    m = re.match(r"([A-Za-z]+)\s*([0-9]{4})", term) or re.match(r"([A-Za-z]+)([0-9]{4})", term)
+    if not m:
+        return None, None
+    return m.group(1).capitalize(), int(m.group(2))
+
+def _next_term_label(last_term: str) -> str:
+    season, year = _parse_term(last_term)
+    if season is None:
+        # fallback: append '+' if unknown format
+        return f"{last_term}+1"
+    idx = TERMS_SEQ.index(season) if season in TERMS_SEQ else 1
+    if idx == len(TERMS_SEQ) - 1:  # Fall -> Winter next year
+        return f"{TERMS_SEQ[0]}{year + 1}"
+    else:
+        return f"{TERMS_SEQ[idx + 1]}{year}"
+
+def _grade_to_numeric(g):
+    if pd.isna(g):
+        return np.nan
+    g = str(g).strip()
+    return GRADE_RANK.get(g, np.nan)
+
+
+def dyn_agg_gpa_forecasting(
+    dept_letter: str = 'Z'  # when agg == "course_in_department", e.g., "C" or "B"
+):
+    """
+    Build time series, predict next term, and return JSON for frontend.
+    - Always includes an OVERALL/UNIVERSITY series.
+    - agg="department": rows are dept letters ('C','B'), averaged per term.
+    - agg="course_in_department": filter to dept_letter and rows are course IDs, averaged per term.
+
+    Returns: forecast_json (dict) with meta + series (history + dashed forecast segment)
+    """
+    # ---- Load data ----
+    if os.path.join(DATA_DIR, 'completed_courses.csv') is None or not os.path.exists(os.path.join(DATA_DIR, 'completed_courses.csv')):
+        raise FileNotFoundError("Provide completed_courses.csv or df_completed.")
+    df_completed = pd.read_csv(
+        os.path.join(DATA_DIR, 'completed_courses.csv'),
+        dtype={":END_ID(Course)": "string", "term": "string", "grade": "string"}
+    )
+    if not os.path.exists(os.path.join(DATA_DIR, 'courses.csv')):
+        raise FileNotFoundError(os.path.join(DATA_DIR, 'courses.csv'))
+    df_courses = pd.read_csv(
+        os.path.join(DATA_DIR, 'courses.csv'),
+        dtype={"id:ID(Course)": "string", "name": "string", "department": "string"}
+    )
+
+    # ---- Prepare base long table ----
+    df = df_completed.dropna(subset=[":END_ID(Course)", "grade", "term"]).copy()
+    df[":END_ID(Course)"] = df[":END_ID(Course)"].astype(str)
+    df["dept_letter"] = df[":END_ID(Course)"].str.slice(0, 1)
+    # level is 6th char (index 5); guard short strings
+    df["level_digit"] = df[":END_ID(Course)"].str.slice(5, 6).str.extract(r"(\d)").fillna("0").astype(int)
+    df["grade_numeric"] = df["grade"].apply(_grade_to_numeric)
+
+    # ---- Department title map from courses.csv (first match wins) ----
+    # Example: for 'C' → "Computer Science", for 'B' → "Biology"
+    df_courses["dept_letter"] = df_courses["id:ID(Course)"].astype(str).str.slice(0, 1)
+    dept_titles = (
+        df_courses.dropna(subset=["dept_letter", "department"])
+                  .drop_duplicates(subset=["dept_letter"])
+                  .set_index("dept_letter")["department"]
+                  .to_dict()
+    )
+
+    # ---- Aggregation selection → build plot_wide (rows × terms), labels, metadata ----
+    if dept_letter not in ['B','C']:
+        agg = 'Course'
+        grouped = (
+            df.groupby(["dept_letter", "term"], as_index=False)
+              .agg(avg_grade=("grade_numeric", "mean"), count=("grade_numeric", "size"))
+        )
+        ordered_terms = sorted(grouped["term"].unique(), key=_term_sort_key)
+        plot_wide = (
+            grouped.pivot(index="dept_letter", columns="term", values="avg_grade")
+                   .reindex(columns=ordered_terms)
+        )
+        row_labels = plot_wide.index.tolist()
+        # Titles for each row (department)
+        row_titles = {dl: dept_titles.get(dl, f"Dept {dl}") for dl in row_labels}
+        row_kind = "department"
+        row_course_map = {}  # not used in this mode
+
+    elif dept_letter in ['B','C']:
+        agg = 'Department'
+        if not dept_letter:
+            raise ValueError("Provide dept_letter (e.g., 'C' or 'B') when agg='course_in_department'.")
+        df_f = df.loc[df["dept_letter"] == dept_letter].copy()
+        if df_f.empty:
+            raise ValueError(f"No rows found for department letter '{dept_letter}'.")
+        grouped = (
+            df_f.groupby([":END_ID(Course)", "term"], as_index=False)
+                .agg(avg_grade=("grade_numeric", "mean"), count=("grade_numeric", "size"))
+        )
+        ordered_terms = sorted(grouped["term"].unique(), key=_term_sort_key)
+        plot_wide = (
+            grouped.pivot(index=":END_ID(Course)", columns="term", values="avg_grade")
+                   .reindex(columns=ordered_terms)
+        )
+        row_labels = plot_wide.index.tolist()  # course IDs
+        # Map course_id -> (course_name, department_title)
+        course_meta = (
+            df_courses.set_index("id:ID(Course)")[["name", "department"]]
+                      .to_dict(orient="index")
+        )
+        row_titles = {
+            cid: course_meta.get(cid, {}).get("name", cid) for cid in row_labels
+        }
+        row_course_map = {
+            cid: {
+                "course_id": cid,
+                "course_name": course_meta.get(cid, {}).get("name"),
+                "department_title": course_meta.get(cid, {}).get("department"),
+                "department_letter": dept_letter,
+            }
+            for cid in row_labels
+        }
+        row_kind = "course"
+    else:
+        raise ValueError("agg must be 'department' or 'course_in_department'.")
+
+    # ---- Overall / University series (one row) ----
+    overall = (
+        df.groupby("term", as_index=False)
+          .agg(avg_grade=("grade_numeric", "mean"))
+          .set_index("term")
+    )
+    # Align to the same term set
+    overall = overall.reindex(ordered_terms)
+    overall_wide = pd.DataFrame([overall["avg_grade"].values], index=["UNIV"], columns=ordered_terms)
+
+    # ---- Predictions (your makepreds) ----
+    preds_main = makepreds(plot_wide)                     # shape (rows,)
+    preds_overall = makepreds(overall_wide)               # shape (1,)
+
+    # Next term
+    last_term = ordered_terms[-1] if ordered_terms else "Spring2025"
+    next_term = _next_term_label(last_term)
+
+    # ---- Build JSON series for main rows ----
+    series = []
+    for i, key in enumerate(plot_wide.index.tolist()):
+        row_vals = plot_wide.iloc[i]
+        history = [{"term": str(t), "value": float(v), "isPred": False}
+                   for t, v in row_vals.items() if pd.notna(v)]
+        pred_val = float(preds_main[i]) if i < len(preds_main) and pd.notna(preds_main[i]) else None
+        forecast_segment = (
+            [{"term": str(last_term), "value": history[-1]["value"], "isPred": False},
+             {"term": next_term, "value": pred_val, "isPred": True}]
+        ) if history and pred_val is not None else []
+
+        entry = {
+            "key": str(key),
+            "kind": row_kind,  # "department" or "course"
+            "title": row_titles.get(key, str(key)),
+            "history": history,
+            "forecast_segment": forecast_segment,
+            "next_point": ({"term": next_term, "value": pred_val, "isPred": True} if pred_val is not None else None),
+        }
+        # attach metadata depending on mode
+        if row_kind == "department":
+            entry["department_letter"] = str(key)
+            entry["department_title"] = row_titles.get(key, f"Dept {key}")
+        else:
+            entry.update(row_course_map.get(key, {}))
+        series.append(entry)
+
+    # ---- Add OVERALL / UNIVERSITY series ----
+    ov_vals = overall_wide.iloc[0]
+    ov_hist = [{"term": str(t), "value": float(v), "isPred": False} for t, v in ov_vals.items() if pd.notna(v)]
+    ov_pred = float(preds_overall[0]) if preds_overall is not None and len(preds_overall) else None
+    ov_seg = (
+        [{"term": str(last_term), "value": ov_hist[-1]["value"], "isPred": False},
+         {"term": next_term, "value": ov_pred, "isPred": True}]
+    ) if ov_hist and ov_pred is not None else []
+    series.append({
+        "key": "UNIV",
+        "kind": "overall",
+        "title": "University",
+        "history": ov_hist,
+        "forecast_segment": ov_seg,
+        "next_point": ({"term": next_term, "value": ov_pred, "isPred": True} if ov_pred is not None else None),
+    })
+
+    # ---- Meta + payload ----
+    forecast_json = {
+        "meta": {
+            "metric": "avg_gpa",
+            "terms": [str(t) for t in ordered_terms],
+            "next_term": next_term,
+            "units": "GPA (0-4.00)",
+            "agg": agg,
+            "dept_letter": dept_letter,
+            "generated_at": datetime.now(timezone.utc).isoformat()
+        },
+        "series": series
+    }
+    return forecast_json
