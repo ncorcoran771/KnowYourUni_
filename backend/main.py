@@ -35,15 +35,30 @@ def validate_id(id: str) -> bool:
 def get_study_buddies(id: str) -> bool:
     return to_plain(student_metrics.study_buddy_finder(id))
 
+# suggested next semester core courses and professor
+@app.get("/api/validate/${id}")
+def suggest_next_semester_classes(id: str) -> bool:
+    return to_plain(student_metrics.suggest_next_semester_classes(id, top_k=15))
+
 # Return all nodes/data for a specific user
 @app.get("/api/kg/${id}")
 def get_id_data(id: str) -> dict:
     return to_plain(qu.fetch_student_data(id))
 
+#Return all relations in a KG
+@app.get("/api/kg/relations")
+def get_all_relations() -> dict:
+    return qu.fetch_all_relations()
+
 # Return all nodes/data in the KG
 @app.get("/api/kg/")
 def get_all_data() -> dict:
     return to_plain(qu.fetch_full_kg_data())
+
+# Return nodes in a specified relation
+@app.get("/api/kg/graph")
+def get_graph(id: str, id2: int) -> dict:
+    return qu.fetch_graph(id, id2)
 
 ''' TODO (endpoints/connections)
 - LLM requests + responses

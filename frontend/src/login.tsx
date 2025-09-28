@@ -9,12 +9,14 @@ import { useUserInfo } from './context/UserInfoProvider';
 import { useKGInfo } from './context/KGInfoProvider';
 import { SVGLogo } from './utils/getSVGLogo';
 import ThemeController from './components/ThemeController';
+import GraphSelector from './components/graphSelector';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
 
 /* Functional component for the login page */
 export const Login: React.FC = () => {
+  // add in a graph selector here for admin to view different relationship types
   const navigate = useNavigate();
   const { setUserInfo } = useUserInfo();
   const { setKGInfo } = useKGInfo();
@@ -27,8 +29,7 @@ export const Login: React.FC = () => {
 
     setSubmitting(true);
     try {
-      //should be isAdmin(id)
-      if (isAdmin(id) || id === 'admin') {
+      if (isAdmin(id)) {
         // Admin login
         setUserInfo({ id, isAdmin: true });
         setKGInfo(prev => ({ ...prev, loading: true, error: null }));
@@ -107,6 +108,7 @@ export const Login: React.FC = () => {
           <Text type="secondary" style={{ display: 'block', marginBottom: 16 }}>
             Enter your Student ID to continue.
           </Text>
+          <GraphSelector />;
 
           <Form layout="vertical" onFinish={onFinish} autoComplete="off" requiredMark={false}>
             <Form.Item

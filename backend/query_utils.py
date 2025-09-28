@@ -54,6 +54,63 @@ def fetch_student_data(student_id: str) -> dict:
             }
         return {"nodes": [], "relationships": []}
     
+
+# --------- Fetching all relationships in the knowledge graph ---------
+def fetch_all_relations() -> dict:
+    ''' Fetch all unique relationship types in the KG to allow filtering'''
+    with driver.session() as session:
+        result = session.run(
+            """
+            MATCH ()-[r]->()
+            RETURN DISTINCT TYPE(r) AS relationships
+            """
+        )
+        return [record["relationships"] for record in result]
+    
+# --------- Fetch nodes in a specified relation to display later ---------
+def fetch_graph(relation: str, max: int) -> dict:
+    ''' Fetch nodes and relationshios of a specified relatyion type'''
+    with driver.session() as session:
+        # select maximum number of nodes/relationships to return
+        result = session.run(
+            f"""
+            MATCH (n)-[r:{relation}]-(m)
+            RETURN n, r, m
+            LIMIT $max
+            """,
+            max=max
+        )
+        nodes_map = {}
+        edges = []
+
+        for record in result:
+            n = record["n"]
+            m = record["m"]
+            r = record["r"]
+
+        #add nodes
+        for node in [n, m]:
+                if node.id not in nodes_map:
+                    nodes_map[node.id] = {
+                        "data": {
+                            "id": str(node.id),
+                            "label": node.get("name", f"Node-{node.id}")
+                        }
+                    }
+        #add edges
+        edges.append(
+            {
+                "data": {
+                    "source": str(n.id),
+                    "target": str(m.id),
+                    "label": type(r).__name__
+                }
+            }
+        )
+
+        return list(nodes_map.values()), edges;
+
+
 # --------- Fetching all data in the knowledge graph ---------
 def fetch_full_kg_data() -> dict:
     ''' Fetch all nodes and relationships in the knowledge graph '''
@@ -73,3 +130,5 @@ def fetch_full_kg_data() -> dict:
                 "relationships": [dict(rel) for rel in relationships]
             }
         return {"nodes": [], "relationships": []}
+    
+
