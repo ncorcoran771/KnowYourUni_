@@ -32,58 +32,94 @@ interface GraphData {
   links: Link[];
 }
 
-// --- MOCK DATA ---
-const mockRelations: string[] = ["Course Prerequisites", "Student Clubs", "Faculty Departments"];
+// --- UMBC-SPECIFIC MOCK DATA ---
+const mockRelations: string[] = ["UMBC CS Prerequisites", "UMBC Student Orgs", "UMBC Academic Departments"];
 
 const mockGraphData: { [key: string]: GraphData } = {
-  "Course Prerequisites": {
+  "UMBC CS Prerequisites": {
     nodes: [
-      { id: "cs101", label: "Intro to CS", group: 1 },
-      { id: "cs201", label: "Data Structures", group: 1 },
-      { id: "cs202", label: "Algorithms", group: 1 },
-      { id: "math151", label: "Calculus I", group: 2 },
-      { id: "phys201", label: "Physics I", group: 3 },
+      // Foundational Math & Stat
+      { id: "math151", label: "MATH 151", group: 2 },
+      { id: "math152", label: "MATH 152", group: 2 },
+      { id: "math221", label: "MATH 221", group: 2 },
+      { id: "stat355", label: "STAT 355", group: 5 },
+
+      // Core CS 200 Level
+      { id: "cmsc201", label: "CMSC 201", group: 1 },
+      { id: "cmsc202", label: "CMSC 202", group: 1 },
+      { id: "cmsc203", label: "CMSC 203", group: 1 },
+      
+      // Core CS 300 Level
+      { id: "cmsc304", label: "CMSC 304", group: 3 },
+      { id: "cmsc313", label: "CMSC 313", group: 3 },
+      { id: "cmsc331", label: "CMSC 331", group: 3 },
+      { id: "cmsc341", label: "CMSC 341", group: 3 },
+
+      // Core CS 400 Level
+      { id: "cmsc411", label: "CMSC 411", group: 4 },
+      { id: "cmsc421", label: "CMSC 421", group: 4 },
+      { id: "cmsc441", label: "CMSC 441", group: 4 },
+      { id: "cmsc447", label: "CMSC 447", group: 4 },
     ],
     links: [
-      { id: "l1", source: "math151", target: "cs101" },
-      { id: "l2", source: "cs101", target: "cs201" },
-      { id: "l3", source: "cs101", target: "cs202" },
-      { id: "l4", source: "phys201", target: "math151" },
+      // Math Path
+      { id: "l1a", source: "math151", target: "math152" },
+      { id: "l1b", source: "math151", target: "stat355" },
+      { id: "l1c", source: "math152", target: "math221" },
+
+      // CMSC 201 Path
+      { id: "l2a", source: "math151", target: "cmsc201" },
+      { id: "l2b", source: "cmsc201", target: "cmsc202" },
+
+      // CMSC 203 Path
+      { id: "l3a", source: "math151", target: "cmsc203" },
+      
+      // CMSC 300 Level Prerequisites
+      { id: "l4a", source: "cmsc202", target: "cmsc313" },
+      { id: "l4b", source: "cmsc202", target: "cmsc331" },
+      { id: "l4c", source: "cmsc202", target: "cmsc341" },
+      { id: "l4d", source: "cmsc203", target: "cmsc341" },
+      { id: "l4e", source: "cmsc201", target: "cmsc304" },
+
+      // CMSC 400 Level Prerequisites
+      { id: "l5a", source: "cmsc313", target: "cmsc411" },
+      { id: "l5b", source: "cmsc313", target: "cmsc421" },
+      { id: "l5c", source: "cmsc341", target: "cmsc421" },
+      { id: "l5d", source: "cmsc341", target: "cmsc441" },
+      { id: "l5e", source: "cmsc341", target: "cmsc447" },
     ],
   },
-  "Student Clubs": {
+  "UMBC Student Orgs": {
     nodes: [
-      { id: "alice", label: "Alice", group: 1 },
-      { id: "bob", label: "Bob", group: 1 },
-      { id: "charlie", label: "Charlie", group: 1 },
-      { id: "chess", label: "Chess Club", group: 2 },
-      { id: "coding", label: "Coding Club", group: 2 },
-      { id: "debate", label: "Debate Club", group: 2 },
+      { id: "ashley", label: "Ashley", group: 1 },
+      { id: "brandon", label: "Brandon", group: 1 },
+      { id: "chris", label: "Chris", group: 1 },
+      { id: "gamedev", label: "Game Dev Club", group: 2 },
+      { id: "cyberdawgs", label: "Cyber Dawgs", group: 2 },
+      { id: "swe", label: "SWE", group: 2 },
     ],
     links: [
-      { id: "l5", source: "alice", target: "chess" },
-      { id: "l6", source: "alice", target: "coding" },
-      { id: "l7", source: "bob", target: "coding" },
-      { id: "l8", source: "charlie", target: "debate" },
-      { id: "l9", source: "charlie", target: "chess" },
+      { id: "l8", source: "ashley", target: "swe" },
+      { id: "l9", source: "ashley", target: "gamedev" },
+      { id: "l10", source: "brandon", target: "cyberdawgs" },
+      { id: "l11", source: "chris", target: "cyberdawgs" },
+      { id: "l12", source: "chris", target: "gamedev" },
     ],
   },
-  "Faculty Departments": {
+  "UMBC Academic Departments": {
     nodes: [
-        { id: "smith", label: "Dr. Smith", group: 1 },
-        { id: "jones", label: "Dr. Jones", group: 1 },
-        { id: "lee", label: "Dr. Lee", group: 1 },
-        { id: "davis", label: "Dr. Davis", group: 1 },
-        { id: "cs", label: "CompSci", group: 2 },
-        { id: "math", label: "Math", group: 2 },
-        { id: "physics", label: "Physics", group: 2 },
+        { id: "hrav", label: "Dr. Hrabowski", group: 1 },
+        { id: "kalloy", label: "Dr. Kalpakis", group: 1 },
+        { id: "adali", label: "Dr. Adali", group: 1 },
+        { id: "csee", label: "CSEE", group: 2 },
+        { id: "meche", label: "Mech Engineering", group: 2 },
+        { id: "vart", label: "Visual Arts", group: 2 },
     ],
     links: [
-        { id: "l10", source: "smith", target: "cs" },
-        { id: "l11", source: "jones", target: "cs" },
-        { id: "l12", source: "jones", target: "math" },
-        { id: "l13", source: "lee", target: "physics" },
-        { id: "l14", source: "davis", target: "math" },
+        { id: "l13", source: "hrav", target: "csee" },
+        { id: "l14", source: "kalloy", target: "csee" },
+        { id: "l15", source: "adali", target: "csee" },
+        { id: "l16", source: "hrav", target: "meche" },
     ]
   }
 };
