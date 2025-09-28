@@ -3,11 +3,24 @@
 from neo4j import GraphDatabase, basic_auth
 import os
 from dotenv import load_dotenv
-load_dotenv()
+from pathlib import Path
+
+def load_dotenv_automatically():
+    ''' Automatically load .env file from the same directory as this script '''
+    script_dir = Path(__file__).resolve().parent
+    dotenv_path = script_dir / '.env'
+    if dotenv_path.exists():
+        load_dotenv(dotenv_path=dotenv_path)
+    else:
+        raise FileNotFoundError(f".env file not found in {script_dir}")
+
+# Call the function to load environment variables
+load_dotenv_automatically()
 
 # Connecting to Neo4j and setting up the driver
-NEO4J_URI = f"neo4j+s://{os.getenv("NEO4J_NAME")}.databases.neo4j.io"
-NEO4J_AUTH = ("neo4j", os.getenv("NEO4J_PASSWORD"))
+name = os.getenv('NEO4J_NAME')
+NEO4J_URI = f"neo4j+s://{name}.databases.neo4j.io"
+NEO4J_AUTH = (os.getenv("NEO4J_USER"), os.getenv("NEO4J_PASSWORD"))
 driver = GraphDatabase.driver(NEO4J_URI, auth=NEO4J_AUTH)
 
 # --------- Validating student ID ---------

@@ -5,8 +5,8 @@ import { Layout, Button, Form, Input, Typography, Card, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { isAdmin } from './context/verify-admin';
 import { fetchKGDataById, fetchFullKGData } from './api';
-import { useUserInfo } from './context/userInfo';
-import { useKGInfo } from './context/kgInfo';
+import { useUserInfo } from './context/UserInfoProvider';
+import { useKGInfo } from './context/KGInfoProvider';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
