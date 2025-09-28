@@ -13,6 +13,7 @@
   "dependencies": {
     "antd": "^5.27.4",
     "cytoscape": "^3.33.1",
+    "d3": "^7.9.0",
     "path": "^0.12.7",
     "react": "^19.1.1",
     "react-cytoscapejs": "^2.0.0",
