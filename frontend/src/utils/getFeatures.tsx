@@ -7,17 +7,16 @@ import * as ic from "@ant-design/icons";
 
 // Const for features available to admin dashboard. Will add as more are implemented
 const ADMIN_FEATURES = [
-    { key: "overview", label: "Overview", icon: <ic.BranchesOutlined style={{ fontSize: 20 }} /> },
-    { key: "projectedGPA", label: "Projected GPA", icon: <ic.LineChartOutlined style={{ fontSize: 20 }} /> },
+    { key: "studentData", label: "Overview", icon: <ic.BranchesOutlined style={{ fontSize: 20 }} /> },
+    { key: "gpaForecast", label: "Projected GPA", icon: <ic.LineChartOutlined style={{ fontSize: 20 }} /> },
     { key: "unibud", label: "Unibud Chat", icon: <ic.MessageOutlined style={{ fontSize: 20 }} /> },
 ]
 
 // Const for features available to student dashboard. Will add as more are implemented
 const USER_FEATURES = [
-    { key: "Overview", label: "Overview", icon: <ic.BranchesOutlined style={{ fontSize: 20 }} /> },
-    { key: "courseRecommendations", label: "Course Recommendations", icon: <ic.BarsOutlined style={{ fontSize: 20 }} /> },
-    { key: "degreeProgress", label: "Degree Progress", icon: <ic.CheckCircleOutlined style={{ fontSize: 20 }} /> },
-    { key: "projectedGPA", label: "Projected GPA", icon: <ic.LineChartOutlined style={{ fontSize: 20 }} /> },
+    { key: "studentData", label: "Overview", icon: <ic.BranchesOutlined style={{ fontSize: 20 }} /> },
+    { key: "courseSuggestion", label: "Course Recommendations", icon: <ic.BarsOutlined style={{ fontSize: 20 }} /> },
+    { key: "gpaForecast", label: "GPA Forecast", icon: <ic.LineChartOutlined style={{ fontSize: 20 }} /> },
     { key: "studyBuddies", label: "Suggested Study Buddies", icon: <ic.LineChartOutlined style={{ fontSize: 20 }} /> },
     { key: "unibud", label: "Unibud Chat", icon: <ic.MessageOutlined style={{ fontSize: 20 }} /> },
 ]

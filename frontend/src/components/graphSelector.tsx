@@ -169,8 +169,8 @@ const NodeGraph: FC<NodeGraphProps> = ({ data }) => {
 
     const simulation = d3
       .forceSimulation<Node>(data.nodes)
-      .force("link", d3.forceLink<Node, Link>(data.links).id((d) => d.id).distance(120))
-      .force("charge", d3.forceManyBody().strength(-300))
+      .force("link", d3.forceLink<Node, Link>(data.links).id((d) => d.id).distance(50))
+      .force("charge", d3.forceManyBody().strength(-200))
       .force("center", d3.forceCenter(width / 2, height / 2));
 
     const color = d3.scaleOrdinal(d3.schemeCategory10);
