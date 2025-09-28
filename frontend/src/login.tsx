@@ -32,16 +32,6 @@ export const Login: React.FC = () => {
       if (isAdmin(id)) {
         // Admin login
         setUserInfo({ id, isAdmin: true });
-        setKGInfo(prev => ({ ...prev, loading: true, error: null }));
-
-        const data = await fetchFullKGData().catch();
-        setKGInfo({
-          nodes: data.nodes ?? [],
-          relationships: data.relationships ?? [],
-          loading: false,
-          error: null,
-        });
-
         navigate('/admin');
       } else {
         // Student login
