@@ -213,6 +213,9 @@ const NodeGraph: FC<NodeGraphProps> = ({ data }) => {
       node.attr("cx", (d) => d.x!).attr("cy", (d) => d.y!);
       labels.attr("x", (d) => d.x!).attr("y", (d) => d.y!);
     });
+    simulation.on("end", () => {
+      simulation.stop();
+      });
 
   }, [data]); // Re-run the effect whenever data changes
 
