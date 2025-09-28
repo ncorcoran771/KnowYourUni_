@@ -32,7 +32,7 @@ def validate_id(id: str) -> bool:
 # study buddy metric
 @app.get("/api/validate/${id}")
 def get_study_buddies(id: str) -> bool:
-    v: bool = student_metrics.study_buddy_finder(id)
+    v = student_metrics.study_buddy_finder(id)
     return {"ok": v}
 
 # Return all nodes/data for a specific user
