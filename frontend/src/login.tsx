@@ -1,12 +1,14 @@
 /* Login component logic */
 
 import React, { useState } from 'react';
-import { Layout, Button, Form, Input, Typography, Card, message } from 'antd';
+import { Layout, Button, Form, Input, Typography, Card, message, theme } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { isAdmin } from './context/verify-admin';
+import { isAdmin } from './utils/verifyAdmin';
 import { fetchKGDataById, fetchFullKGData } from './api';
 import { useUserInfo } from './context/UserInfoProvider';
 import { useKGInfo } from './context/KGInfoProvider';
+import { SVGLogo } from './utils/getSVGLogo';
+import ThemeController from './components/ThemeController';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
@@ -76,14 +78,23 @@ export const Login: React.FC = () => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Header style={{ display: 'flex', alignItems: 'center', backgroundColor: '#001529' }}>
-        <h1 style={{ color: 'white', margin: 0 }}>KnowYourUni</h1>
+      <Header
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingInline: 16,
+          background: theme.useToken().token.colorPrimary,
+        }}
+      >
+        <SVGLogo />
+        <div style={{ fontWeight: 800 }}>Know Your Uni</div>
+        <ThemeController />
       </Header>
       <Content
         style={{
           margin: '16px',
           padding: '16px',
-          backgroundColor: 'white',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -94,19 +105,19 @@ export const Login: React.FC = () => {
             Sign in
           </Title>
           <Text type="secondary" style={{ display: 'block', marginBottom: 16 }}>
-            Enter your ID to continue.
+            Enter your Student ID to continue.
           </Text>
 
           <Form layout="vertical" onFinish={onFinish} autoComplete="off" requiredMark={false}>
             <Form.Item
-              label="ID"
+              label="Student ID"
               name="id"
               rules={[{ required: true, message: 'Please enter your ID' }]}
             >
               <Input
                 size="large"
-                placeholder="e.g., A12345678"
-                onPressEnter={() => { /* Form handles submission via onFinish */ }}
+                placeholder="e.g., A12345"
+                onPressEnter={() => { /* handled by onFinish */ }}
               />
             </Form.Item>
 
@@ -131,7 +142,7 @@ export const Login: React.FC = () => {
       </Content>
       
 
-      <Footer style={{ textAlign: 'center' }}>© 2025 KnowYourUni</Footer>
+      <Footer style={{ textAlign: 'center' }}>HackUMBC '25 - KnowYourUni</Footer>
     </Layout>
   );
 };

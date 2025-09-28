@@ -1,3 +1,3 @@
 # Components
 
-Contain all of the smaller helper components for the dashboard pages to display
+Contains all of the components to be displayed on the pages
