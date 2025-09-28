@@ -3,12 +3,17 @@ import numpy as np
 import pandas as pd
 import warnings
 
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent       # folder of student_metrics.py (or main.py)
+DATA_DIR = (HERE / ".." / "umbc_data" / "csv").resolve()  # adjust .. as needed
+
 
 def study_buddy_finder(
 	student_id: str,
 	top_n: int = 10,
 	sort_by: str = "overall",   # "mean" | "max" | "cand_func"
-	data_dir: str = "../umbc_data/csv",
+	data_dir: str = DATA_DIR,
 ):
 	def _read_csv(path, **kwargs):
 		df = pd.read_csv(path, **kwargs)
@@ -144,7 +149,7 @@ def study_buddy_finder(
 def suggest_next_semester_classes(
     student_id: str,
     top_k: int = 20,
-    data_dir: str = "../umbc_data/csv",
+    data_dir: str = DATA_DIR,
 ):
     
     warnings.filterwarnings("ignore")
