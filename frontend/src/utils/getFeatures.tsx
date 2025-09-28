@@ -18,7 +18,7 @@ const USER_FEATURES = [
     { key: "courseRecommendations", label: "Course Recommendations", icon: <ic.BarsOutlined style={{ fontSize: 20 }} /> },
     { key: "degreeProgress", label: "Degree Progress", icon: <ic.CheckCircleOutlined style={{ fontSize: 20 }} /> },
     { key: "projectedGPA", label: "Projected GPA", icon: <ic.LineChartOutlined style={{ fontSize: 20 }} /> },
-    { key: "suggestedStudyBuddies", label: "Suggested Study Buddies", icon: <ic.LineChartOutlined style={{ fontSize: 20 }} /> },
+    { key: "studyBuddies", label: "Suggested Study Buddies", icon: <ic.LineChartOutlined style={{ fontSize: 20 }} /> },
     { key: "unibud", label: "Unibud Chat", icon: <ic.MessageOutlined style={{ fontSize: 20 }} /> },
 ]
 
