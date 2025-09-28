@@ -14,3 +14,5 @@ langchain-google-genai
 langchain-community
 matplotlib
 scikit-learn
+google-generativeai 
+google-ai-generativelanguage

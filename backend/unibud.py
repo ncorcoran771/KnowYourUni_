@@ -10,8 +10,14 @@ load_dotenv_automatically()
 os.environ.setdefault("GRPC_VERBOSITY", "ERROR")
 os.environ.setdefault("GRPC_TRACE", "")
 
-from langchain_google_genai import GoogleGenerativeAIEmbeddings, GoogleGenerativeAI
+from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from typing import List
+
+import os, google.generativeai as genai
+genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+for m in genai.list_models():
+    if "generateContent" in getattr(m, "supported_generation_methods", []):
+        print(m.name)
 
 # Initialize the LLM with Gemini API key
 API_KEY: str = os.getenv("GOOGLE_API_KEY")
@@ -19,12 +25,12 @@ if not API_KEY:
     raise RuntimeError("GOOGLE_API_KEY is not set")
 
 embedding = GoogleGenerativeAIEmbeddings(
-    model="text-embedding-004", 
+    model="models/text-embedding-004", 
     api_key=API_KEY
 )
 
-llm = GoogleGenerativeAI(
-    model="gemini-1.5-flash",
+llm = ChatGoogleGenerativeAI(
+    model="models/gemini-2.5-flash",
     temperature=0,
     api_key=API_KEY
 )
@@ -85,14 +91,14 @@ def ask(q: str):
         recs = s.run("""
         WITH $qv AS qv
         CALL db.index.vector.queryNodes('node_vec_idx', 12, qv) YIELD node, score
-        WITH collect(id(node))[0..6] AS seeds, $rels AS rels
+        WITH collect(elementId(node))[0..6] AS seeds, $rels AS rels
         MATCH p=(s)-[r*1..2]-(m)
-        WHERE id(s) IN seeds AND all(x IN r WHERE type(x) IN rels)
+        WHERE elementId(s) IN seeds AND all(x IN r WHERE type(x) IN rels)
         WITH nodes(p) AS ns, relationships(p) AS rs
         UNWIND ns AS n
         UNWIND rs AS rel
         RETURN DISTINCT elementId(n) AS nid, labels(n) AS labs, n AS n,
-            id(startNode(rel)) AS src, type(rel) AS rt, id(endNode(rel)) AS dst
+            elementId(startNode(rel)) AS src, type(rel) AS rt, elementId(endNode(rel)) AS dst
         LIMIT 1200
         """, {"qv": qv, "rels": all_relations})
 
@@ -112,6 +118,6 @@ def ask(q: str):
     for s_id, rel, t_id in edges[:300]:
         triples.append(f"({tag(s_id)}) -[{rel}]-> ({tag(t_id)})")
 
-    prompt = f"GRAPH FACTS:\n" + "\n".join(triples) + f"\n\nQUESTION: {q}\nAnswer using only GRAPH FACTS. IF YOU ARE UNSURE, \
-    GIVE A VERY BRIEF GENERAL RESPONSE AND BE LIGHT. DO NOT MAKE UP FACTS. IF THE QUESTION IS NOT ABOUT THE UNIVERSITY, SAY 'I AM UNIBUD, YOUR UNIVERSITY BUDDY! UNFORTUNATELY, I AM NOT TOO SURE ABOUT THAT ONE.'"
-    return {"response": llm.invoke(prompt).content}
+    prompt = f"GRAPH FACTS:\n" + "\n".join(triples) + f"\n\nQUESTION: {q}\nAnswer using only GRAPH FACTS. If there are none, just give a very general answer.'"
+    reply = llm.invoke(prompt).content
+    return reply

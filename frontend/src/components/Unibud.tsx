@@ -10,8 +10,8 @@ const UnibudChat: React.FC = () => {
   const [err, setErr] = useState<string | null>(null);
 
   // Allow base URL override for dev/prod
-  const API_BASE = import.meta?.env?.VITE_API_BASE_URL || "";
-  const endpoint = `${API_BASE}/api/unibud`;
+  //const API_BASE = import.meta?.env?.VITE_API_BASE_URL || "";
+  const endpoint = `api/unibud/ask`;
 
   const handleSend = async () => {
     if (!input.trim() || loading) return;
@@ -53,8 +53,7 @@ const UnibudChat: React.FC = () => {
       }
 
       // Accept common field names: reply / answer / content / message
-      const botText =
-        data.reply ?? data.answer ?? data.content ?? data.message ?? "";
+      const botText = (data as any)?.text || "";
 
       if (!botText) {
         console.warn("No expected field in response:", data);
