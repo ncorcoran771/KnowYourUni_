@@ -708,3 +708,94 @@ def dyn_agg_gpa_forecasting(
         "series": series
     }
     return forecast_json
+
+
+def students_to_json() -> str:
+    """
+    Reads:
+      - students.csv
+      - student_degree.csv
+    Produces JSON array with, per student:
+      - Student ID          -> students['id:ID(Student)']
+      - Name                -> students['name']
+      - Expected Graduation -> students['expectedGraduation']
+      - Major               -> student_degree[':END_ID(Degree)'] via :START_ID(Student) match
+      - Financial Aid       -> students['financialAidStatus']
+    """
+    # --- Load CSVs ---
+    this_path_ = os.path.join(DATA_DIR, "students.csv")
+    othr_path_ = os.path.join(DATA_DIR, "student_degree.csv")
+
+    if not os.path.exists(this_path_):
+        raise FileNotFoundError(f"Missing students.csv at {this_path_}")
+    if not os.path.exists(othr_path_):
+        raise FileNotFoundError(f"Missing student_degree.csv at {othr_path_}")
+
+    students = pd.read_csv(
+        this_path_,
+        dtype={
+            "id:ID(Student)": "string",
+            "name": "string",
+            "expectedGraduation": "string",
+            "financialAidStatus": "string",
+        }
+    )
+
+    sdeg = pd.read_csv(
+        othr_path_,
+        dtype={
+            ":START_ID(Student)": "string",
+            ":END_ID(Degree)": "string",
+        }
+    )
+
+    # --- Validate required columns (friendly error if schema differs) ---
+    req_students = ["id:ID(Student)", "name", "expectedGraduation", "financialAidStatus"]
+    missing_students = [c for c in req_students if c not in students.columns]
+    if missing_students:
+        raise KeyError(f"students.csv missing columns: {missing_students}")
+
+    req_sdeg = [":START_ID(Student)", ":END_ID(Degree)"]
+    missing_sdeg = [c for c in req_sdeg if c not in sdeg.columns]
+    if missing_sdeg:
+        raise KeyError(f"student_degree.csv missing columns: {missing_sdeg}")
+
+    # --- Collapse degrees per student (handle multi-degree students) ---
+    degs_per_student = (
+        sdeg.dropna(subset=[":START_ID(Student)", ":END_ID(Degree)"])
+            .groupby(":START_ID(Student)")[":END_ID(Degree)"]
+            .apply(lambda s: sorted({str(x) for x in s if pd.notna(x)}))
+            .rename("majors")
+            .reset_index()
+    )
+
+    # --- Join onto students by ID ---
+    merged = students.merge(
+        degs_per_student,
+        left_on="id:ID(Student)",
+        right_on=":START_ID(Student)",
+        how="left"
+    )
+
+    # If no degree rows, set empty list
+    merged["majors"] = merged["majors"].apply(lambda x: x if isinstance(x, list) else [])
+
+    # For convenience also expose a single "major" string (first major or "")
+    merged["major"] = merged["majors"].apply(lambda lst: lst[0] if lst else "")
+
+    # --- Build JSON rows with requested keys ---
+    out_rows = []
+    for _, r in merged.iterrows():
+        out_rows.append({
+            "student_id": str(r["id:ID(Student)"]) if pd.notna(r["id:ID(Student)"]) else "",
+            "name":       str(r["name"]) if pd.notna(r["name"]) else "",
+            "expected_graduation": str(r["expectedGraduation"]) if pd.notna(r["expectedGraduation"]) else "",
+            "financial_aid_status": str(r["financialAidStatus"]) if pd.notna(r["financialAidStatus"]) else "",
+            "majors": r["majors"],        # all majors (list of strings)
+        })
+
+    return json.dumps(out_rows, indent=2)
+
+# Example: print the JSON
+if __name__ == "__main__":
+    print(students_to_json())
