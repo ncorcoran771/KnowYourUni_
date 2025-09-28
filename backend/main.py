@@ -37,7 +37,7 @@ def validate_id(id: str):
 
 # study buddy metric
 @app.get("/api/get_study_buddies/{id}")
-def get_study_buddies(id: str) -> dict:
+def get_study_buddies(id: str):
     return JSONResponse(jsonable_encoder(student_metrics.study_buddy_finder(id)))
 
 # suggested next semester core courses and professor
