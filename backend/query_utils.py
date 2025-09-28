@@ -1,6 +1,7 @@
 ''' Tons of utility functions for querying the neo4j backend '''
 
 from neo4j import GraphDatabase, basic_auth
+from neo4j.exceptions import Neo4jError
 import os
 from dotenv import load_dotenv
 from pathlib import Path
@@ -64,13 +65,34 @@ def fetch_student_data(student_id: str) -> dict:
 def fetch_all_relations() -> dict:
     ''' Fetch all unique relationship types in the KG to allow filtering'''
     with driver.session() as session:
-        result = session.run(
-            """
+        # First try
+        try:
+            res = session.run("""
+                SHOW RELATIONSHIP TYPES
+                YIELD name
+                RETURN name ORDER BY name
+            """)
+            return [r["name"] for r in res]
+        except Neo4jError:
+            pass
+
+        # Second try
+        try:
+            res = session.run("""
+                CALL db.relationshipTypes() YIELD relationshipType
+                RETURN relationshipType AS name ORDER BY name
+            """)
+            return [r["name"] for r in res]
+        except Neo4jError:
+            pass
+
+        # Scan as last resort (slower)
+        res = session.run("""
             MATCH ()-[r]->()
-            RETURN DISTINCT TYPE(r) AS relationships
-            """
-        )
-        return [record["relationships"] for record in result]
+            RETURN DISTINCT type(r) AS name
+            ORDER BY name
+        """)
+        return [r["name"] for r in res]
     
 # --------- Fetch nodes in a specified relation to display later ---------
 def fetch_graph(relation: str, max: int) -> dict:

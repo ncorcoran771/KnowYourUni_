@@ -11,7 +11,7 @@ const UnibudChat: React.FC = () => {
 
   // Allow base URL override for dev/prod
   const API_BASE = import.meta?.env?.VITE_API_BASE_URL || "";
-  const endpoint = `${API_BASE}/api/ask-unibud`;
+  const endpoint = `${API_BASE}/api/unibud`;
 
   const handleSend = async () => {
     if (!input.trim() || loading) return;
@@ -29,7 +29,7 @@ const UnibudChat: React.FC = () => {
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userText }), // ensure backend expects "message"
+        body: JSON.stringify({ query: userText }), // ensure backend expects "message"
         signal: ctrl.signal,
       });
 
@@ -41,7 +41,7 @@ const UnibudChat: React.FC = () => {
         return;
       }
 
-      // Try JSON first; fall back to text
+      // Try JSON first, then fall back to text
       let data: unknown = null;
       try {
         data = await res.json();

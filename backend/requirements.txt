@@ -12,4 +12,5 @@ joblib
 langchain
 langchain-google-genai
 langchain-community
-react-cytoscapejs
+matplotlib
+scikit-learn
