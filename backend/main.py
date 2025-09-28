@@ -40,10 +40,20 @@ def get_study_buddies(id: str) -> bool:
 def get_id_data(id: str) -> dict:
     return qu.fetch_student_data(id)
 
+#Return all relations in a KG
+@app.get("/api/kg/relations")
+def get_all_relations() -> dict:
+    return qu.fetch_all_relations()
+
 # Return all nodes/data in the KG
 @app.get("/api/kg/")
 def get_all_data() -> dict:
     return qu.fetch_full_kg_data()
+
+# Return nodes in a specified relation
+@app.get("/api/kg/graph")
+def get_graph(id: str) -> dict:
+    return qu.fetch_graph(id)
 
 ''' TODO (endpoints/connections)
 - LLM requests + responses

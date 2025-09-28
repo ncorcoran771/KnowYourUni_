@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Connecting to Neo4j and setting up the driver
-NEO4J_URI = f'"neo4j+s://{os.getenv("NEO4J_NAME")}.databases.neo4j.io"'
+NEO4J_URI = f"neo4j+s://{os.getenv("NEO4J_NAME")}.databases.neo4j.io"
 NEO4J_AUTH = ("neo4j", os.getenv("NEO4J_PASSWORD"))
 driver = GraphDatabase.driver(NEO4J_URI, auth=NEO4J_AUTH)
 
@@ -41,6 +41,40 @@ def fetch_student_data(student_id: str) -> dict:
             }
         return {"nodes": [], "relationships": []}
     
+
+# --------- Fetching all relationships in the knowledge graph ---------
+def fetch_all_relations() -> dict:
+    ''' Fetch all unique relationship types in the KG to allow filtering'''
+    with driver.session() as session:
+        result = session.run(
+            """
+            MATCH ()-[r]->()
+            RETURN DISTINCT TYPE(r) AS relationships
+            """
+        )
+        return [record["relationships"] for record in result]
+    
+# --------- Fetch nodes in a specified relation to display later ---------
+def fetch_graph(relation: str) -> dict:
+    ''' Fetch nodes and relationshios of a specified relatyion type'''
+    with driver.session() as session:
+        result = session.run(
+            """
+            MATCH (n)-[r]->(m)
+            WHERE TYPE(r) = $relation
+            RETURN collect(DISTINCT n) AS nodes, collect(DISTINCT r) AS relationships
+            """
+        )
+        record = result.single()
+        if record:
+            nodes = record["nodes"]
+            relationships = record["relationships"]
+            return {
+                "nodes": [dict(node) for node in nodes],
+                "relationships": [dict(rel) for rel in relationships]
+            }
+        return {"nodes": [], "relationships": []}
+
 # --------- Fetching all data in the knowledge graph ---------
 def fetch_full_kg_data() -> dict:
     ''' Fetch all nodes and relationships in the knowledge graph '''
@@ -60,3 +94,5 @@ def fetch_full_kg_data() -> dict:
                 "relationships": [dict(rel) for rel in relationships]
             }
         return {"nodes": [], "relationships": []}
+    
+

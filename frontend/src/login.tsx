@@ -25,8 +25,7 @@ export const Login: React.FC = () => {
 
     setSubmitting(true);
     try {
-      //should be isAdmin(id)
-      if (isAdmin(id) || id === 'admin') {
+      if (isAdmin(id)) {
         // Admin login
         setUserInfo({ id, isAdmin: true });
         setKGInfo(prev => ({ ...prev, loading: true, error: null }));
