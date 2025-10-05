@@ -2,6 +2,8 @@
 
 Advanced analytics dashboard to provide insights for universities. Submission for the HackUMBC'25 Hackathon.
 
+> 🚀 **Devpost Submission:** [KnowYourUni](https://devpost.com/software/knowyouruni)
+
 ## Student + Admin Signup
 ![Demo Picture - Signup](frontend/public/demo/Signin.png)
 
