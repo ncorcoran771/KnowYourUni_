@@ -1,8 +1,14 @@
-# Know Your Uni!
+# Know Your Uni
 
+Advanced analytics dashboard to provide insights for universities. Submission for the HackUMBC'25 Hackathon.
 
-![Demo Picture - Signup](frontend\public\demo\Signin.png)
+## Student + Admin Signup
+![Demo Picture - Signup](frontend/public/demo/Signin.png)
 
-![Demo Picture - Dashboard](frontend\public\demo\Dashboard1.png)
+## Dashboard
+![Demo Picture - Dashboard](frontend/public/demo/Dashboard1.png)
 
-Submission for the HackUMBC'25 Hackathon. Utilizes a knowledge graph for cool stuff!
+## Tech Stack
+- Frontend: React, D3.js
+- Backend: Python, FastAPI
+- Database: Neo4J AuraDB
